@@ -1,8 +1,8 @@
 import { prisma } from "../utils/prisma";
-import { JwtKey, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import bcrypt, { compareSync } from 'bcrypt'
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { getToken } from "../utils/key";
+
 
 
 export function checkJwt(accessToken: string): JwtPayload | null {
@@ -48,14 +48,17 @@ export async function loginUser(email: string, password: string): Promise<User |
         },
         include: {
             jwtKey: true,
-            Post: true
+            post: true,
+            comments: true
         }
     })
     if (!user) {
-        throw new Error('Bad request, User invalid!')
+         throw new Error('Bad request, User invalid!') 
     }
     if (!compareSync(password, user.password)) {
-        throw new Error('Bad request, Password invalid!')
+         throw new Error('Bad request, Password invalid!')
     }
     return user
 }
+
+

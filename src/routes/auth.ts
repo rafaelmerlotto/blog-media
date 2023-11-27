@@ -25,7 +25,7 @@ auth.post('/register', async (req, res) => {
 auth.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user: User | null = await loginUser(email, password);
-    if (!user) {
+    if (!user || ! password) {
         res.status(401).send({ msg: 'Authentication invalid', check: false })
     }
     const token: string = await generateJwt(user)
