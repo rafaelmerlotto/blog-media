@@ -60,6 +60,33 @@ export async function getPost(accessToken: string): Promise<Post | null> {
 }
 
 
+export async function getPostUser(id: string, accessToken: string): Promise<Post | null> {
+    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    if (!payload) {
+        throw new Error("Token not valid");
+    }
+    await prisma.user.findUnique({
+        where: {
+            id: <string>payload.userId
+        }
+    })
+    const post: Post | any = await prisma.post.findMany({
+        where: {
+            authorId: id,
+            
+        },
+        include:{
+            comments: true
+        }
+    })
+    if (!post) {
+        throw new Error("Bad Request, cannot get the list!");
+    }
+    return post
+}
+
+
+
 
 export async function updatePost(id: string,accessToken: string, title: string, body: string): Promise<Post | null> {
     const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
