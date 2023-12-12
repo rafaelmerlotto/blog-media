@@ -2,12 +2,15 @@ import express from 'express'
 import { auth } from './routes/auth';
 import { app } from './routes/blog';
 import { comment } from './routes/comment';
+import cors from 'cors'
 
 const server = express();
 server.use(express.json())
+server.use(cors())
 server.use('/auth', auth)
 server.use('/app', app)
 server.use('/comment', comment)
+
 
 
 

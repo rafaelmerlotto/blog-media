@@ -7,9 +7,9 @@ import { checkJwt } from "./authService";
 
 
 export async function createPost(title: string, body: string, accessToken: string): Promise<Post | any> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV2!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+       return null
     }
     const userId: string = payload.userId
     const user: User | null = await prisma.user.findUnique({
@@ -28,16 +28,16 @@ export async function createPost(title: string, body: string, accessToken: strin
         },
     })
     if (!post) {
-        throw new Error("Bad request, post cannot create!");
+        return null
     }
     return post
 }
 
 
 export async function getPost(accessToken: string): Promise<Post | null> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     await prisma.user.findUnique({
         where: {
@@ -54,16 +54,16 @@ export async function getPost(accessToken: string): Promise<Post | null> {
         }
     })
     if (!post) {
-        throw new Error("Bad Request, cannot get the list!");
+        return null
     }
     return post
 }
 
 
 export async function getPostUser(id: string, accessToken: string): Promise<Post | null> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     await prisma.user.findUnique({
         where: {
@@ -80,7 +80,7 @@ export async function getPostUser(id: string, accessToken: string): Promise<Post
         }
     })
     if (!post) {
-        throw new Error("Bad Request, cannot get the list!");
+        return null
     }
     return post
 }
@@ -89,9 +89,9 @@ export async function getPostUser(id: string, accessToken: string): Promise<Post
 
 
 export async function updatePost(id: string,accessToken: string, title: string, body: string): Promise<Post | null> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     await prisma.user.findUnique({
         where: {
@@ -108,16 +108,16 @@ export async function updatePost(id: string,accessToken: string, title: string, 
         }
     })
     if(!post){
-        throw new Error("Bad Request, cannot change the post!");
+        return null
     }
     return post
 }
 
 
 export async function deletePost(id: string, accessToken: string):Promise <Post | null> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     await prisma.user.findUnique({
         where: {
@@ -130,7 +130,7 @@ export async function deletePost(id: string, accessToken: string):Promise <Post 
         }
     })
     if(!post){
-        throw new Error("Bad Request, cannot delete the post!");
+        return null
     }
     return post
 }

@@ -34,7 +34,7 @@ export async function registerUser
         }
     })
     if (!user) {
-        throw new Error('Bad request, user cannot create!')
+        return null
     }
 
     return user
@@ -53,10 +53,10 @@ export async function loginUser(email: string, password: string): Promise<User |
         }
     })
     if (!user) {
-         throw new Error('Bad request, User invalid!') 
+        return null
     }
     if (!compareSync(password, user.password)) {
-         throw new Error('Bad request, Password invalid!')
+        return null
     }
     return user
 }

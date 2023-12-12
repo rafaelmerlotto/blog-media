@@ -6,9 +6,9 @@ import { prisma } from "../utils/prisma";
 
 
 export async function createComment(accessToken: string, commentText: string, postId: string): Promise<Comment | null> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     const userId: string = payload.userId
     const user: User | null = await prisma.user.findUnique({
@@ -30,16 +30,16 @@ export async function createComment(accessToken: string, commentText: string, po
         }
     })
     if (!comment) {
-        throw new Error("Bad request, comment cannot create!");
+        return null
     }
     return comment
 }
 
 
 export async function getComment(id: string, accessToken: string): Promise<Comment | null> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     await prisma.user.findUnique({
         where: {
@@ -55,7 +55,6 @@ export async function getComment(id: string, accessToken: string): Promise<Comme
         }
     })
     if (!comment) {
-        // throw new Error("Bad Request, cannot get the list of comments!");
         return null
     }
     return comment
@@ -65,9 +64,9 @@ export async function getComment(id: string, accessToken: string): Promise<Comme
 
 
 export async function updateComment(id: string, accessToken: string, commentText: string): Promise<Comment | null> {
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     await prisma.user.findUnique({
         where: {
@@ -91,9 +90,9 @@ export async function updateComment(id: string, accessToken: string, commentText
 
 
 export async function deleteComment(id: string, accessToken: string):Promise<Comment | null>{
-    const payload: JwtPayload | null = checkJwt(process.env.ACCESS_TOKEN_DEV!);
+    const payload: JwtPayload | null = checkJwt(accessToken);
     if (!payload) {
-        throw new Error("Token not valid");
+        return null
     }
     await prisma.user.findUnique({
         where: {
@@ -106,7 +105,7 @@ export async function deleteComment(id: string, accessToken: string):Promise<Com
         }
     })
     if(!comment){
-        throw new Error("Bad Request, cannot delete the post!");
+        return null
     }
     return comment
 }
