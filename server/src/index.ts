@@ -3,6 +3,10 @@ import { auth } from './routes/auth';
 import { app } from './routes/blog';
 import { comment } from './routes/comment';
 import cors from 'cors'
+import dotenv from 'dotenv'
+
+
+dotenv.config()
 
 const server = express();
 server.use(express.json())

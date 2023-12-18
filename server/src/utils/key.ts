@@ -1,7 +1,10 @@
 import {KeyPairSyncResult,generateKeyPairSync} from "crypto";
 import {prisma} from "./prisma";
 import {JwtKey, User} from "@prisma/client";
+import dotenv from "dotenv";
 import jwt,{JwtPayload} from "jsonwebtoken";
+
+dotenv.config();
 
 export interface JwtKeyInterface{
     privateKey: string;
@@ -28,12 +31,13 @@ function generateKeys():JwtKeyInterface{
     return keys;
 }
 
-export async function getToken(user:User):Promise<JwtKey>{
+async function getToken(user:User):Promise<JwtKey>{
     const actualKeys:JwtKey|null = await prisma.jwtKey.findUnique({
         where:{
-          userId: user.id
+            userId:user.id
         }
     });
+   
     if(actualKeys){
         try{
             const payload:string|JwtPayload = jwt.verify(actualKeys.accessToken,actualKeys.privateKey);
@@ -55,13 +59,16 @@ export async function getToken(user:User):Promise<JwtKey>{
     let keys:JwtKey|null = await prisma.jwtKey.findUnique({
         where:{
             userId:user.id
+        },
+        include:{
+            user:true
         }
     });
     if(!keys){
         const genKeys:JwtKeyInterface = generateKeys();
         const payload = {
             aud: "access",
-            exp: getExpirationTime(60),
+            exp: getExpirationTime(60),       
             sub: user.email,
             userId: user.id,
             email: user.email
@@ -76,5 +83,7 @@ export async function getToken(user:User):Promise<JwtKey>{
             }
         });
     }
-    return keys;
+   return keys
 }
+
+export{getToken}

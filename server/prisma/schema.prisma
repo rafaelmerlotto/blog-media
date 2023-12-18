@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId 
   email     String    @unique
   password  String
   firstName String
@@ -19,43 +19,45 @@ model User {
   birthDate String
   post      Post[]
   comments  Comment[]
-  jwtKey    JwtKey[]
-}
-
-model Post {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  title      String
-  body       String
-  createTime DateTime @default(now())
-  author     User      @relation(fields: [authorId], references: [id])
-  authorId   String    @db.ObjectId
-  authorName String    @map("firstName")
-  comments   Comment[]
-
-  @@unique([id, authorId])
-}
-
-model Comment {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  comment    String
-  createTime DateTime @default(now())
-  post       Post      @relation(fields: [postId], references: [id])
-  postId     String    @db.ObjectId
-  author     User      @relation(fields: [authorId], references: [id])
-  authorId   String    @db.ObjectId
-  authorName String    @map("firstName")
-
-  @@unique([id, authorId])
-  @@unique([id, postId])
+  jwt       JwtKey[]
 }
 
 model JwtKey {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   privateKey  String
   publicKey   String
-  accessToken String
+  accessToken String 
   user        User   @relation(fields: [userId], references: [id])
-  userId      String @unique @db.ObjectId
+  userId      String @db.ObjectId @unique
 
   @@unique([id, userId])
 }
+
+model Post {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  title      String
+  body       String
+  createTime DateTime  @default(now())
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   String     @db.ObjectId
+  authorName String   @map("firstName")
+  comments   Comment[]
+
+  @@unique([id, authorId])
+}
+
+model Comment {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  comment    String
+  createTime DateTime @default(now())
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     String   @db.ObjectId
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String    @db.ObjectId
+  authorName String   @map("firstName")
+
+  @@unique([id, authorId])
+  @@unique([id, postId])
+}
+
+
