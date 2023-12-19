@@ -7,16 +7,18 @@ import { useAuth } from '../auth/auth';
 export default function Login() {
     const [err, setErr] = useState(false);
     const { token, login } = useAuth()
+
     const { register, handleSubmit } = useForm();
     let navigate = useNavigate();
     const onSubmit = async (data) => {
         setErr(false)
         const res = await login(data);
         setErr(!res);
-        localStorage.setItem('token', token)
+
     };
     if (token) {
-      return navigate("/blog") 
+        localStorage.setItem('token', token)
+        return navigate("/blog")
     }
 
     return (

@@ -1,0 +1,15 @@
+.btn-logout {
+
+    width: 70%;
+    height: 35px;
+    margin: 25px;
+    color: #d7dde8;
+    font-size: 18px;
+    cursor: pointer;
+    color:  rgb(121, 44, 152);
+    text-decoration: none;
+}
+
+.btn-logout:hover {
+    color: rgb(207, 226, 242);
+}

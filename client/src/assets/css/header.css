@@ -1,0 +1,21 @@
+.header{
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(to right, #757f9a, #d7dde8);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+   justify-content: space-around;
+}
+.nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+   gap: 15px;
+   
+}
+.nav .link{
+ font-size: 19px;
+
+    
+}

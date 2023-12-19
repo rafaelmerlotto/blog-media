@@ -59,35 +59,37 @@ import { checkJwt } from "./checkJwt";
 // }
 
 
-export async function getPost(accessToken: string): Promise<User | null> {
+// export async function getPost(accessToken: string): Promise<User | null> {
     
-    const payload:string| JwtPayload |null = checkJwt(accessToken);
+//     const payload:string| JwtPayload |null = checkJwt(accessToken);
       
-        const userId: string  = payload!.userId
+//         const userId: string  = payload!.userId
    
-    const user: User | null = await prisma.user.findUnique({
-        where: {
-            id: userId,
-        },
-        include: {
-            comments: true
-        }
-    })
-    if (!user) {
-        return null
-    }
-    const posts: Post[] | null | any  = await prisma.post.findMany({
-        where:{
-            authorId: user.id,
-            authorName: user.firstName
-        }
-    })
-    if(!posts){
-        return null
-    }
-    return posts
+//     const user: User | null = await prisma.user.findUnique({
+//         where: {
+//             id: userId,
+//         },
+//         include: {
+//             post:true,
+//             comments: true,
+//             jwt:true
+//         }
+//     })
+//     if (!user) {
+//         return null
+//     }
+//     const posts: Post[] | null | any  = await prisma.post.findMany({
+//         where:{
+//             authorId: user.id,
+//             authorName: user.firstName
+//         }
+//     })
+//     if(!posts){
+//         return null
+//     }
+//     return posts
     
-}
+// }
 
 
 // export async function getPostUser(authorId: string, accessToken: string): Promise<Post | null> {

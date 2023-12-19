@@ -1,0 +1,52 @@
+.createPost {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+     margin-top: 20px;
+}
+.createPost h3{
+    color: #757f9a;
+  
+
+}
+.createPost input{
+    width: 40%;
+    height: 40px;
+    border: 1px #757f9a solid;
+    border-radius: 5px;
+   color: #757f9a;
+}
+.createPost textarea{
+    width: 60%;  
+    background: transparent;
+    border: 1px #757f9a solid;
+    border-radius: 5px;
+    color: #757f9a;
+    font-size: 20px;
+    margin-top: 20px;
+   
+
+}
+
+
+.btn-createPost {
+
+    width: 20%;
+    height: 35px;
+    margin: 25px;
+    border-radius: 5px;
+    border: none;
+    color: hsla(191, 28%, 23%, 1);
+    font-size: 18px;
+    cursor: pointer;
+    background: linear-gradient(to right, #757f9a, #d7dde8);
+}
+
+/* ::placeholder{
+    font-size: 19px;
+    text-align: center;
+    color: #757f9a;
+   
+} */

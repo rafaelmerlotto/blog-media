@@ -1,8 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { appService } from '../services';
+import '../assets/css/createPost.css'
 
-export default function CreatePost({onCreate}) {
+export default function CreatePost({onCreate, firstName, children}) {
 
    
   
@@ -11,11 +12,13 @@ export default function CreatePost({onCreate}) {
         appService.createPost(data)
     }
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" {...register('title')} />
-            <input type="text" {...register('body')} />
-            <button type='submit'>Create</button>
-            
+
+        <form className='createPost' onSubmit={handleSubmit(onSubmit)}>
+            <h3>Would you like to publish a post, {firstName}?</h3>
+            <input placeholder='Title' type="text" {...register('title')} />
+            <textarea placeholder='Write your post!' rows="10" cols="100" type="text" {...register('body')} />
+            <button type='submit' className='btn-createPost'>Publish</button>
+            {children}
         </form>
         
     )

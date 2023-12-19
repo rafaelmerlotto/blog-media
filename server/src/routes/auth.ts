@@ -5,6 +5,8 @@ import bcrypt, { compareSync } from 'bcrypt'
 import dotenv from "dotenv"
 import { prisma } from '../utils/prisma';
 import { userInfo } from 'os';
+import { JwtPayload } from 'jsonwebtoken';
+import { checkJwt } from '../services/checkJwt';
 
 dotenv.config();
 const auth: Router = express.Router()
@@ -70,7 +72,23 @@ auth.post('/login', async (req, res) => {
 })
 
 
-
+auth.post("/user",async(req,res) => {
+    const accessToken = req.headers.authorization
+    const payload:JwtPayload|null = checkJwt(accessToken!);
+    if(!payload){
+        return res.status(401).send({message:"Token not valid",valid:false});
+    }
+    const userId:string = payload.userId;
+    const user:User|null = await prisma.user.findUnique({
+        where:{
+            id:userId
+        }
+    });
+    if(!user){
+        return res.status(401).send({message:"User not valid",valid:false});
+    }
+    return res.status(200).send({name:user.firstName,email:user.email,valid:true});
+})
 
 export { auth }
 

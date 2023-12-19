@@ -45,6 +45,23 @@ export class AuthService {
         }
     }
 
+    async user(firstName) {
+        const res = await fetch(`${this.url}/user`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                authorization: this.iToken
+            },
+            body: JSON.stringify(firstName)
+        })
+        if (res.ok) {
+            const data = await res.json();
+            console.log(data.name)
+            return data.name
+        }
+        return false
+    }
+
 }
 
 

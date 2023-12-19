@@ -3,13 +3,13 @@ import express, { Router } from 'express'
 import { JwtPayload } from 'jsonwebtoken';
 import { prisma } from '../utils/prisma';
 import { checkJwt } from '../services/checkJwt';
-import { getPost } from '../services/blogService';
+
 
 const app: Router = express.Router();
 
 
 app.post("/create", async (req, res) => {
-  const {title, body } = req.body
+  const { title, body } = req.body
   const accessToken = req.headers.authorization
   const payload: JwtPayload | null = checkJwt(accessToken!);
   if (!payload) {
@@ -44,16 +44,38 @@ app.post("/create", async (req, res) => {
 
 app.get('/posts', async (req, res) => {
   const accessToken = req.headers.authorization
+  const payload: string | JwtPayload | null = checkJwt(accessToken!);
+  if (!payload) {
+    return res.status(401).send({ message: "Token not valid", valid: false });
+  }
+  const userId: string = payload!.userId
 
-  console.log("access token", accessToken)
-
-
-  const post: User | null = await getPost(accessToken!);
- 
-  if (!post) {
+  const user: User | null = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    include: {
+      post: true,
+      comments: true,
+      jwt: true
+    }
+  })
+  if (!user) {
+    return null
+  }
+  const posts: Post[] | null | any = await prisma.post.findMany({
+    where: {
+      authorId: user.id,
+      authorName: user.firstName
+    },
+    include: {
+      comments: true
+    }
+  })
+  if (!posts) {
     return res.status(404).send({ msg: 'List of post not found', valid: false })
   }
-  return res.status(200).send({ msg: 'List of post found', post: post,  valid: true })
+  return res.status(200).send({ msg: 'List of post found', post: posts, valid: true })
 })
 
 
