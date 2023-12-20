@@ -13,6 +13,8 @@ export default function Header({ firstName, children }) {
       </div>
       <div className='nav'>
         <Link className='link' to={"/blog"}>Home</Link>
+        <Link className='link' to={"/timeline"}>Timeline</Link>
+        <Link className='link' to={"/account"}>My Account</Link>
         <Link className='link'>About the blog</Link>
         <Logout />
       </div>

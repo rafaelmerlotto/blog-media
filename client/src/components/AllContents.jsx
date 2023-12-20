@@ -2,12 +2,14 @@ import React from 'react'
 import '../assets/css/contents.css'
 
 
-export default function Contents({ post, children }) {
+export default function AllContents({post, children}) {
+    const { id, title, body, authorName, createTime } = post;
 
-  const { id, title, body, authorName, createTime } = post;
   return (
-    <div className='container-blogPost'  >
-
+    
+  
+      
+     <div className='container-blogPost'  >
       <div className='content' key={id} >
         <div className='manager-post'>
           <button className='btn-managerPost'>Delete post</button>
@@ -51,6 +53,11 @@ export default function Contents({ post, children }) {
       </div>
 
     </div>
-  )
+   
 
+   
+  
+  )
 }
+
+

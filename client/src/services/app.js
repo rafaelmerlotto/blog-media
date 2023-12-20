@@ -9,6 +9,20 @@ export class AppService {
     }
 
     async posts() {
+        const res = await fetch(`${this.url}/posts/user`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                authorization: authService.iToken
+            },
+        })
+        if (res.ok) {
+            return await res.json();
+        }
+        return false
+    }
+
+    async gatAllPosts() {
         const res = await fetch(`${this.url}/posts`, {
             method: 'GET',
             headers: {

@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState()
     const login = async (email, password) => {
         const res = await authService.login(email, password);
-        console.log(res)
         if (!res) {
            return false
         }

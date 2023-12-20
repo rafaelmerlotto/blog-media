@@ -1,5 +1,5 @@
 import express, { Router } from 'express'
-import {  JwtKey, User } from '@prisma/client'
+import { JwtKey, User } from '@prisma/client'
 import { getToken } from '../utils/key';
 import bcrypt, { compareSync } from 'bcrypt'
 import dotenv from "dotenv"
@@ -12,7 +12,7 @@ dotenv.config();
 const auth: Router = express.Router()
 
 
-async function verifyUser (email: string, password: string) :Promise<User | false>{
+async function verifyUser(email: string, password: string): Promise<User | false> {
     const user: User | null = await prisma.user.findUnique({
         where: {
             email: email,
@@ -20,10 +20,10 @@ async function verifyUser (email: string, password: string) :Promise<User | fals
         include: {
             post: true,
             comments: true,
-            jwt:true
+            jwt: true
         }
     })
-    if(! user){
+    if (!user) {
         return false
     }
     if (!compareSync(password, user.password)) {
@@ -32,8 +32,8 @@ async function verifyUser (email: string, password: string) :Promise<User | fals
     return user
 }
 
-async function generateJwt(user:User):Promise<string>{
-    const jwtKeys:JwtKey = await getToken(user);
+async function generateJwt(user: User): Promise<string> {
+    const jwtKeys: JwtKey = await getToken(user);
     return jwtKeys.accessToken;
 }
 
@@ -67,27 +67,74 @@ auth.post('/login', async (req, res) => {
     if (!compareSync(password, user.password)) {
         return null
     }
-    const token: string  = await generateJwt(user)
+    const token: string = await generateJwt(user)
     return res.status(200).send({ msg: `Hello `, accessToken: token, valid: true })
 })
 
 
-auth.post("/user",async(req,res) => {
+auth.post("/user", async (req, res) => {
     const accessToken = req.headers.authorization
-    const payload:JwtPayload|null = checkJwt(accessToken!);
-    if(!payload){
-        return res.status(401).send({message:"Token not valid",valid:false});
+    const payload: JwtPayload | null = checkJwt(accessToken!);
+    if (!payload) {
+        return res.status(401).send({ message: "Token not valid", valid: false });
     }
-    const userId:string = payload.userId;
-    const user:User|null = await prisma.user.findUnique({
-        where:{
-            id:userId
+    const userId: string = payload.userId;
+    const user: User | null = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        include: {
+            post: true,
+            comments: true
         }
     });
-    if(!user){
-        return res.status(401).send({message:"User not valid",valid:false});
+    if (!user) {
+        return res.status(401).send({ message: "User not valid", valid: false });
     }
-    return res.status(200).send({name:user.firstName,email:user.email,valid:true});
+    return res.status(200).send({ name: user.firstName, email: user.email, valid: true });
+})
+
+auth.get("/manager/user", async (req, res) => {
+    const accessToken = req.headers.authorization
+    const payload: JwtPayload | null = checkJwt(accessToken!);
+    if (!payload) {
+        return res.status(401).send({ message: "Token not valid", valid: false });
+    }
+    const userId: string = payload.userId;
+    const user: User | null = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        include: {
+            post: true,
+            comments: true
+        }
+    });
+    if (!user) {
+        return res.status(401).send({ message: "User not valid", valid: false });
+    }
+    const getUser: User[] | null = await prisma.user.findMany({
+        where:{
+            id: userId
+        }, 
+        include:{
+            comments: true, 
+            post: true
+        }
+    })
+    if (!getUser) {
+        return res.status(401).send({ message: "User not valid", valid: false });
+    }
+    return res.status(200).send({
+        // email: user.email,
+        // firstName: user.firstName,
+        // surName: user.surName,
+        // birthDate: user.birthDate,
+        // posts: [].length,
+        // comments: [].length,
+        // valid: true
+        user: getUser
+    });
 })
 
 export { auth }

@@ -42,7 +42,7 @@ app.post("/create", async (req, res) => {
 })
 
 
-app.get('/posts', async (req, res) => {
+app.get('/posts/user', async (req, res) => {
   const accessToken = req.headers.authorization
   const payload: string | JwtPayload | null = checkJwt(accessToken!);
   if (!payload) {
@@ -61,7 +61,7 @@ app.get('/posts', async (req, res) => {
     }
   })
   if (!user) {
-    return null
+    return res.status(401).send({ message: "User not valid", valid: false });
   }
   const posts: Post[] | null | any = await prisma.post.findMany({
     where: {
@@ -79,16 +79,15 @@ app.get('/posts', async (req, res) => {
 })
 
 
-// app.get('/post/user/:id', async (req, res) => {
-//   const { accessToken } = req.body;
-//   const { id } = req.params
-//   console.log(accessToken)
-//   const post: Post | null = await getPostUser(id, accessToken);
-//   if (!post) {
-//     return res.status(404).send({ msg: 'List of post not found', check: false })
-//   }
-//   return res.status(200).send({ msg: 'List of post found', post: post, check: true })
-// })
+app.get('/posts', async (req, res) => {
+  const accessToken = req.headers.authorization
+  console.log(accessToken)
+  const post: Post[] | null = await prisma.post.findMany()
+  if (!post) {
+    return res.status(404).send({ msg: 'List of post not found', check: false })
+  }
+  return res.status(200).send({ msg: 'List of post found', post: post, check: true })
+})
 
 
 // app.put("/update/:id", async (req, res) => {

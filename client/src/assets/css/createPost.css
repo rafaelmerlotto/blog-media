@@ -17,6 +17,8 @@
     border: 1px #757f9a solid;
     border-radius: 5px;
    color: #757f9a;
+   font-size: 20px;
+
 }
 .createPost textarea{
     width: 60%;  
@@ -44,9 +46,9 @@
     background: linear-gradient(to right, #757f9a, #d7dde8);
 }
 
-/* ::placeholder{
+ .createPost ::placeholder{
     font-size: 19px;
-    text-align: center;
+    text-align: start;
     color: #757f9a;
    
-} */
+}

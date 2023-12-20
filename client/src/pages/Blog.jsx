@@ -24,10 +24,8 @@ export default function Blog() {
   }, [])
 
 
-
   async function createPosts(accessToken, title, body) {
     const createPost = await appService.createPost(accessToken, title, body)
-    console.log(accessToken)
     setContents(createPost)
   }
 
@@ -44,7 +42,7 @@ export default function Blog() {
     <div>
       <Header firstName={user} />
       <CreatePost firstName={user} onCreate={(title, body) => createPosts(auth.token, title, body)} />
-   
+      <h2 className='timeline-title' style={{textAlign:"center", color:"#757f9a"}}>My Blog Post</h2>
       {contents.map((e) => (
         <Contents post={e} />
       ))}

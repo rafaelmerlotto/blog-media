@@ -1,0 +1,80 @@
+
+.container-blogPost{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.container-blogPost .myPostBlog-title{
+    color: #757f9a !important;
+}
+
+.content{
+    width: 60%;
+    height: auto;
+    margin: 10px;
+    padding: 20px;
+    background: linear-gradient(to right, #757f9a, #d7dde8);
+    border-radius: 5px;
+}
+.post .body{
+    font-size: 16px;
+}
+.content p{
+    font-weight: bold;
+    font-size: 14px;
+}
+.content span{
+    font-size: 13px;
+}
+
+.manager-post{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.manager-post button{
+    width:max-content;
+    height: 26px;
+    border-radius: 5px;
+    border: none;
+    color: #d7dde8;
+    font-size: 12px;
+    cursor: pointer;
+    background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
+}
+.btn-managerPost:hover{
+    background: rgb(141, 60, 60);
+}
+
+.manager-comment{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.manager-comment button{
+    width: max-content;
+    height: 26px;
+    border-radius: 5px;
+    border: none;
+    color: #d7dde8;
+    font-size: 12px;
+    cursor: pointer;
+    background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
+}
+.btn-managerComment:hover{
+    background: rgb(141, 60, 60);
+}
+
+h3{
+    margin-top: 40px;
+    color:hsla(191, 28%, 23%, 1) ;
+}
+
+hr{
+    border: 1px solid hsla(191, 28%, 23%, 1);
+}

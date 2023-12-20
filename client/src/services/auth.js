@@ -19,7 +19,7 @@ export class AuthService {
             headers: {
                 'content-type': 'application/json',
             },
-            body: JSON.stringify( email, password)
+            body: JSON.stringify(email, password)
         })
         if (res.ok) {
             const data = await res.json();
@@ -40,7 +40,6 @@ export class AuthService {
         })
         if (res.ok) {
             const data = await res.json();
-            console.log(data)
             return data
         }
     }
@@ -56,8 +55,21 @@ export class AuthService {
         })
         if (res.ok) {
             const data = await res.json();
-            console.log(data.name)
             return data.name
+        }
+        return false
+    }
+
+    async accountUser( ) {
+        const res = await fetch(`${this.url}/manager/user`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                authorization: this.iToken
+            },
+        })
+        if (res.ok) {
+            return await res.json(); 
         }
         return false
     }
