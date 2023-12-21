@@ -36,6 +36,11 @@
     justify-content: flex-end;
     gap: 10px;
 }
+.info span{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .manager-post button{
     width:max-content;
     height: 26px;

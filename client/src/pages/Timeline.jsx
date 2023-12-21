@@ -15,7 +15,7 @@ export default function Timeline() {
         }
         allPosts()
     }, [])
-    
+
 
     async function dataUser(firstName) {
         const user = await authService.user(firstName)
@@ -23,11 +23,13 @@ export default function Timeline() {
     }
     dataUser()
 
+    console.log(allContents.sort((a, b) => { return (a - b) }).reverse())
+
     return (
         <div>
             <Header firstName={user} />
-            <h2 className='timeline-title' style={{textAlign:"center", color:"#757f9a"}}>Timeline</h2>
-            {allContents.map((e) => (
+            <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a" }}>Timeline</h2>
+            {allContents.sort().reverse().map((e) => (
                 <AllContents post={e} />
             ))}
         </div>

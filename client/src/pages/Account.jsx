@@ -19,7 +19,7 @@ export default function Account() {
 
     async function dataUser(firstName) {
         const user = await authService.user(firstName)
-        setUser(user[0])
+        setUser(user)
     }
     dataUser()
 
@@ -30,7 +30,16 @@ export default function Account() {
 
             <Header firstName={user} />
             {getUser.map((e) => (
-                <UserManager id={e.id} user={e} />         
+                <UserManager
+                    key={e.id}
+                    id={e.id}
+                    email={e.email}
+                    firstName={e.firstName}
+                    surName={e.surName}
+                    birthDate={e.birthDate}
+                    post={e.post.length}
+                    comments={e.comments.length}
+                />
             ))}
 
         </div>

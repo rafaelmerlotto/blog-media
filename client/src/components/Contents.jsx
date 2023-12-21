@@ -1,5 +1,6 @@
 import React from 'react'
 import '../assets/css/contents.css'
+import profilePic from '../assets/images/profile-pic.png'
 
 
 export default function Contents({ post, children }) {
@@ -20,7 +21,7 @@ export default function Contents({ post, children }) {
           {children}
         </div>
         <div className='info'>
-          <span>Author: {authorName} - published: {createTime} </span>
+          <span> Author:&nbsp; <img src={profilePic} style={{borderRadius:100}} height={20}/> &nbsp;{authorName} - published: {createTime} </span>
         </div>
 
         <h3>Comments</h3>

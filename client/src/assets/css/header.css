@@ -7,6 +7,11 @@
   align-items: center;
    justify-content: space-around;
 }
+.welcome-user p{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .nav{
     display: flex;
     flex-direction: row;
@@ -15,7 +20,5 @@
    
 }
 .nav .link{
- font-size: 19px;
-
-    
+ font-size: 19px;  
 }

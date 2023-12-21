@@ -1,0 +1,48 @@
+.container-account{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.content-account{
+    width: 60%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    padding: 20px;
+    background: linear-gradient(to right, #757f9a, #d7dde8);
+    border-radius: 5px;
+}
+.container-account .container-account-info{
+    width: 50%;
+}
+
+.container-account .container-account-manager{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.container-account p{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.container-account img{
+    border-radius: 100%;
+}
+.container-account-manager .btn-account{
+    width:40%;
+    height: 26px;
+    margin: 20px;
+    border-radius: 5px;
+    border: none;
+    color: #d7dde8;
+    font-size: 12px;
+    cursor: pointer;
+    background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
+}
