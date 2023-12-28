@@ -1,8 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../assets/css/account.css'
 import profilePic from '../assets/images/Rafael_Merlotto.jpg'
+import { authService } from '../services'
+import { useNavigate } from 'react-router-dom'
 
 export default function UserManager({ id, email, firstName, surName, birthDate, post, comments }) {
+
+    const [user, setUser] = useState(false)
+    const navigate = useNavigate()
+
+
+    async function deleteAccount() {
+        const user = await authService.deleteAccountUser()
+        console.log(user)
+        return user
+    }
+    
+    const handleDelete = async (event) => {
+        event.preventDefault()
+        deleteAccount();
+     return navigate("/deletedAccount")
+    }
+
+
+
+
+
+
 
     return (
         <div className='container-account' key={id}>
@@ -19,7 +43,7 @@ export default function UserManager({ id, email, firstName, surName, birthDate, 
                 <div className='container-account-manager'>
                     <button className='btn-account'>Profile image</button>
                     <button className='btn-account'>Change password</button>
-                    <button className='btn-account'>Delete account</button>
+                    <button className='btn-account' onClick={handleDelete}>Delete account</button>
                 </div>
 
 

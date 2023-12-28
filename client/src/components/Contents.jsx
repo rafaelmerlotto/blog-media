@@ -1,56 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../assets/css/contents.css'
 import profilePic from '../assets/images/profile-pic.png'
+import CreateComment from './CreateComment';
+import DeletedPost from './DeletedPost';
 
 
-export default function Contents({ post, children }) {
+export default function Contents({ id, title, body, authorName, createTime, comments, children }) {
+  
+  const [contents, setContents] = useState([])
 
-  const { id, title, body, authorName, createTime } = post;
+  useEffect(() => {
+    setContents(comments)
+  }, [])
+
+
+
   return (
     <div className='container-blogPost'  >
 
       <div className='content' key={id} >
-        <div className='manager-post'>
-          <button className='btn-managerPost'>Delete post</button>
-          <button >Edit post</button>
-        </div>
+        <DeletedPost postId={id} key={id}/>
 
         <div className='post'>
           <h2>{title}</h2>
           <p className='body'>{body}</p>
-          {children}
+
         </div>
         <div className='info'>
-          <span> Author:&nbsp; <img src={profilePic} style={{borderRadius:100}} height={20}/> &nbsp;{authorName} - published: {createTime} </span>
+          <span> Author:&nbsp; <img src={profilePic} style={{ borderRadius: 100 }} height={20} /> &nbsp;{authorName} - published: {createTime} </span>
         </div>
 
+        <CreateComment  postId={id} key={id}/>
         <h3>Comments</h3>
-        <hr />
-        <div className='comment'>
-          <div className='manager-comment'>
-            <button className='btn-managerComment'>Delete comment</button>
-            <button >Edit comment</button>
-          </div>
-          <p>ullamcorper dui. Etiam eros urna, pretium vitae tellus non</p>
-        </div>
-        <div className='info'>
-          <span> Author: Test -published: 03/31/2023 </span>
-        </div>
-        <hr></hr>
-        <div className='comment'>
-          <div className='manager-comment'>
-            <button className='btn-managerComment'>Delete comment</button>
-            <button >Edit comment</button>
-          </div>
-          <p>ullamcorper dui. Etiam eros urna, pretium vitae tellus non</p>
-        </div>
-        <div className='info'>
-          <span> Author: Test -published: 03/31/2023 </span>
 
-        </div>
+
+        {contents.map((e) => (
+          <div className='info' key={e.id}>
+            <hr />
+            <p>{e.comment}</p>
+            <span> Author:&nbsp; <img src={profilePic} style={{ borderRadius: 100 }} height={20} /> &nbsp;{e.authorName} - published: {e.createTime} </span>
+          </div>
+        ))}
+
+
 
       </div>
-
+      {children}
     </div>
   )
 

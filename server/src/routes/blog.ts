@@ -63,15 +63,18 @@ app.get('/posts/user', async (req, res) => {
   if (!user) {
     return res.status(401).send({ message: "User not valid", valid: false });
   }
-  const posts: Post[] | null | any = await prisma.post.findMany({
+
+  const posts: Post[] | Post | null = await prisma.post.findMany({
     where: {
       authorId: user.id,
-      authorName: user.firstName
+
     },
     include: {
       comments: true
     }
   })
+
+
   if (!posts) {
     return res.status(404).send({ msg: 'List of post not found', valid: false })
   }
@@ -80,14 +83,21 @@ app.get('/posts/user', async (req, res) => {
 
 
 app.get('/posts', async (req, res) => {
-  const accessToken = req.headers.authorization
-  console.log(accessToken)
-  const post: Post[] | null = await prisma.post.findMany()
+
+  const post: Post[] | null = await prisma.post.findMany({
+    include: {
+      comments: true
+    }
+  })
+
   if (!post) {
     return res.status(404).send({ msg: 'List of post not found', check: false })
   }
   return res.status(200).send({ msg: 'List of post found', post: post, check: true })
 })
+
+
+
 
 
 // app.put("/update/:id", async (req, res) => {
@@ -101,15 +111,45 @@ app.get('/posts', async (req, res) => {
 // })
 
 
-// app.delete('/delete/:id', async (req, res) => {
-//   const { authorId, accessToken } = req.body;
-//   const { id } = req.params;
-//   const post: Post | null = await deletePost(id,authorId, accessToken);
-//   if (!post) {
-//     return res.status(400).send({ msg: 'Cannot delete post', check: false })
-//   }
-//   return res.status(200).send({ msg: 'Post deleted correctly', post: post, check: true })
-// })
+app.delete('/delete/:id', async (req, res) => {
+  const { id } = req.params;
+  const accessToken = req.headers.authorization
+  const payload: JwtPayload | null = checkJwt(accessToken!);
+  if (!payload) {
+    return res.status(401).send({ message: "Token not valid", valid: false });
+  }
+
+  const userId: string = payload.userId
+  const user: User | null = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    }
+  })
+  if (!user) {
+    return res.status(401).send({ message: "User not valid", valid: false });
+  }
+ 
+
+  const post: Post | null = await prisma.post.delete({
+    where: {
+      id: id
+    },
+    include:{
+      comments:true
+    }
+  })
+  await prisma.comment.deleteMany({
+    where:{
+      postId: post.id
+    }
+  })
+ 
+
+  if (!post) {
+    return res.status(400).send({ msg: 'Cannot delete post', valid: false })
+  }
+  return res.status(200).send({ msg: 'Post deleted correctly', post: post, valid: true })
+})
 
 export { app }
 

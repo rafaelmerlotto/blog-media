@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { appService, authService } from '../services'
+import { appPostService, authService } from '../services'
 import Header from '../components/Header'
 import AllContents from '../components/AllContents';
 
 
+
+
 export default function Timeline() {
+
     const [allContents, setAllContents] = useState([]);
     const [user, setUser] = useState("")
 
     useEffect(() => {
         async function allPosts() {
-            const posts = await appService.gatAllPosts();
-            return setAllContents(posts.post)
+            const posts = await appPostService.gatAllPosts();
+            setAllContents(posts.post)
+            return
         }
         allPosts()
     }, [])
+
 
 
     async function dataUser(firstName) {
@@ -23,15 +28,18 @@ export default function Timeline() {
     }
     dataUser()
 
-    console.log(allContents.sort((a, b) => { return (a - b) }).reverse())
+
 
     return (
         <div>
             <Header firstName={user} />
             <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a" }}>Timeline</h2>
-            {allContents.sort().reverse().map((e) => (
-                <AllContents post={e} />
+            {allContents.map((e) => (
+                <>
+                    <AllContents post={e} comments={e.comments} />
+                </>
             ))}
+
         </div>
     )
 }

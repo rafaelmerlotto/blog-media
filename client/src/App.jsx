@@ -6,16 +6,20 @@ import Register from "./pages/Register";
 import { useAuth } from "./auth/auth";
 import Timeline from "./pages/Timeline";
 import Account from "./pages/Account";
+import DeletedAcount from "./components/DeletedAccount";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/blog"  element={  <Blog/> } />
-          <Route path="/timeline"  element={  <Timeline/> } />
-          <Route path="/account"  element={  <Account/> } />
-          <Route path="/" element={<Login />} />
+         <Route path="/blog"  element={  <PrivateRoute>  <Blog/></PrivateRoute> } />
+          <Route path="/timeline"  element={  <PrivateRoute> <Timeline/></PrivateRoute>  } />
+          <Route path="/account"  element={  <PrivateRoute>  <Account/></PrivateRoute> } />
+          <Route path="/deletedAccount"  element={ <DeletedAcount/> } />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>

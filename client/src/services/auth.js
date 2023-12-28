@@ -4,8 +4,9 @@ export class AuthService {
 
     iToken;
 
-    constructor(url) {
+    constructor(url, message) {
         this.url = url
+        this.message = message
     }
 
     get token() {
@@ -21,12 +22,14 @@ export class AuthService {
             },
             body: JSON.stringify(email, password)
         })
-        if (res.ok) {
-            const data = await res.json();
-            this.iToken = data.accessToken;
-            return true
+        if (!res) {
+            return false
         }
-        return false
+        const data = await res.json();
+        this.iToken = data.accessToken;
+        this.message = data.msg
+        return true
+
     }
 
 
@@ -60,7 +63,7 @@ export class AuthService {
         return false
     }
 
-    async accountUser( ) {
+    async accountUser() {
         const res = await fetch(`${this.url}/manager/user`, {
             method: 'GET',
             headers: {
@@ -69,7 +72,22 @@ export class AuthService {
             },
         })
         if (res.ok) {
-            return await res.json(); 
+            return await res.json();
+        }
+        return false
+    }
+
+    async deleteAccountUser() {
+        const res = await fetch(`${this.url}/deleteAccount`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                authorization: this.iToken
+            },
+        })
+        if (res.ok) {
+            console.log(res)
+            return await res.json();
         }
         return false
     }

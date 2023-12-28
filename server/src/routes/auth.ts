@@ -4,7 +4,6 @@ import { getToken } from '../utils/key';
 import bcrypt, { compareSync } from 'bcrypt'
 import dotenv from "dotenv"
 import { prisma } from '../utils/prisma';
-import { userInfo } from 'os';
 import { JwtPayload } from 'jsonwebtoken';
 import { checkJwt } from '../services/checkJwt';
 
@@ -76,7 +75,7 @@ auth.post("/user", async (req, res) => {
     const accessToken = req.headers.authorization
     const payload: JwtPayload | null = checkJwt(accessToken!);
     if (!payload) {
-        return res.status(401).send({ message: "Token not valid", valid: false });
+        return res.status(401).send({ msg: "Token not valid", valid: false });
     }
     const userId: string = payload.userId;
     const user: User | null = await prisma.user.findUnique({
@@ -89,12 +88,47 @@ auth.post("/user", async (req, res) => {
         }
     });
     if (!user) {
-        return res.status(401).send({ message: "User not valid", valid: false });
+        return res.status(401).send({ msg: "User not valid", valid: false });
     }
     return res.status(200).send({ name: user.firstName, email: user.email, valid: true });
 })
 
 auth.get("/manager/user", async (req, res) => {
+    const accessToken = req.headers.authorization
+    const payload: JwtPayload | null = checkJwt(accessToken!);
+    if (!payload) {
+        return res.status(401).send({ msg: "Token not valid", valid: false });
+    }
+    const userId: string = payload.userId;
+    const user: User | null = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        include: {
+            post: true,
+            comments: true
+        }
+    });
+    if (!user) {
+        return res.status(401).send({ msg: "User not valid", valid: false });
+    }
+    const getUser: User[] | null = await prisma.user.findMany({
+        where: {
+            id: userId
+        },
+        include: {
+            comments: true,
+            post: true
+        }
+    })
+    if (!getUser) {
+        return res.status(401).send({ msg: "User not valid", valid: false });
+    }
+    return res.status(200).send({ user: getUser, valid: true });
+})
+
+
+auth.delete('/deleteAccount', async (req, res) => {
     const accessToken = req.headers.authorization
     const payload: JwtPayload | null = checkJwt(accessToken!);
     if (!payload) {
@@ -104,37 +138,35 @@ auth.get("/manager/user", async (req, res) => {
     const user: User | null = await prisma.user.findUnique({
         where: {
             id: userId
-        },
-        include: {
-            post: true,
-            comments: true
         }
     });
     if (!user) {
-        return res.status(401).send({ message: "User not valid", valid: false });
+        return res.status(401).send({ msg: "User not valid", valid: false });
     }
-    const getUser: User[] | null = await prisma.user.findMany({
+    await prisma.jwtKey.deleteMany({
         where:{
-            id: userId
-        }, 
-        include:{
-            comments: true, 
-            post: true
+            userId: user.id
         }
     })
-    if (!getUser) {
-        return res.status(401).send({ message: "User not valid", valid: false });
+    await prisma.post.deleteMany({
+        where:{
+            authorId: user.id
+        }
+    })
+    await prisma.comment.deleteMany({
+        where:{
+            authorId: user.id
+        }
+    })
+    const deleteUser: User | null = await prisma.user.delete({
+        where: {
+            id: user.id
+        }
+    })
+    if (!deleteUser) {
+        return res.status(500).send({ msg: "Internal server error.", valid: false });
     }
-    return res.status(200).send({
-        // email: user.email,
-        // firstName: user.firstName,
-        // surName: user.surName,
-        // birthDate: user.birthDate,
-        // posts: [].length,
-        // comments: [].length,
-        // valid: true
-        user: getUser
-    });
+    return res.status(200).send({msg:"Account deleted correctly.",valid:true});
 })
 
 export { auth }

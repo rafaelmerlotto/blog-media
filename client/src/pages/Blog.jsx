@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { appService, authService } from '../services';
+import { appPostService, authService } from '../services';
 import { useAuth } from '../auth/auth';
 import CreatePost from '../components/CreatePost';
 import Contents from '../components/Contents';
 import Header from '../components/Header';
 
 
+
 export default function Blog() {
   const [contents, setContents] = useState([]);
   const [posts, setPosts] = useState("")
-  const [message, setMessage] = useState()
+  const [comments, setComments] = useState([])
   const [user, setUser] = useState("")
 
 
@@ -17,15 +18,20 @@ export default function Blog() {
 
   useEffect(() => {
     async function getPosts() {
-      const posts = await appService.posts()
-      return setContents(posts.post)
+      const posts = await appPostService.posts()
+      setComments(posts.post[0])
+      setContents(posts.post)
+      return
+
+
     }
     getPosts();
   }, [])
 
 
+
   async function createPosts(accessToken, title, body) {
-    const createPost = await appService.createPost(accessToken, title, body)
+    const createPost = await appPostService.createPost(accessToken, title, body)
     setContents(createPost)
   }
 
@@ -42,9 +48,23 @@ export default function Blog() {
     <div>
       <Header firstName={user} />
       <CreatePost firstName={user} onCreate={(title, body) => createPosts(auth.token, title, body)} />
-      <h2 className='timeline-title' style={{textAlign:"center", color:"#757f9a"}}>My Blog Post</h2>
+      <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a" }}>My Blog Post</h2>
       {contents.map((e) => (
-        <Contents post={e} />
+        <>
+      
+          <Contents
+            key={e.id}
+            id={e.id}
+            title={e.title}
+            body={e.body}
+            authorName={e.authorName}
+            createTime={e.createTime}
+            comments={e.comments}
+          />
+
+
+        </>
+
       ))}
     </div>
   )

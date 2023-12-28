@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { appService } from '../services';
+import { appPostService } from '../services';
 import '../assets/css/createPost.css'
 
 export default function CreatePost({onCreate, firstName, children}) {
@@ -9,7 +9,7 @@ export default function CreatePost({onCreate, firstName, children}) {
   
     const { register, handleSubmit } = useForm();
     const onSubmit = (data) => {
-        appService.createPost(data)
+        appPostService.createPost(data)
     }
     return (
 

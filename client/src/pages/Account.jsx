@@ -23,8 +23,8 @@ export default function Account() {
     }
     dataUser()
 
-
     console.log(getUser)
+
     return (
         <div>
 
