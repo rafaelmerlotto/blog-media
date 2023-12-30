@@ -4,9 +4,9 @@ import UserManager from '../components/UserManager'
 import Header from '../components/Header'
 
 export default function Account() {
+
     const [getUser, setGetUser] = useState([])
     const [user, setUser] = useState("")
-
 
     useEffect(() => {
         async function dataUser() {
@@ -16,18 +16,15 @@ export default function Account() {
         dataUser()
     }, [])
 
-
     async function dataUser(firstName) {
         const user = await authService.user(firstName)
         setUser(user)
     }
     dataUser()
 
-    console.log(getUser)
 
     return (
         <div>
-
             <Header firstName={user} />
             {getUser.map((e) => (
                 <UserManager
@@ -36,7 +33,7 @@ export default function Account() {
                     email={e.email}
                     firstName={e.firstName}
                     surName={e.surName}
-                    birthDate={e.birthDate}
+                    birthDate={new Date(e.birthDate).toLocaleDateString("it-IT")}
                     post={e.post.length}
                     comments={e.comments.length}
                 />

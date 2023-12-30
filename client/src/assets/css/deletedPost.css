@@ -1,0 +1,75 @@
+.dropdown {
+    position: relative;
+    padding: 0;
+    margin-right: 1em;
+    border: none;
+  }
+  
+  .dropdown summary {
+    list-style: none;
+    list-style-type: none;
+  }
+  
+  .dropdown > summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  .dropdown summary:focus {
+    outline: none;
+  }
+  
+  
+  
+  .dropdown summary:focus {
+    outline: none;
+  }
+  summary a{
+    font-size: 40px;
+    cursor: pointer;
+  }
+  
+  .dropdown ul {
+    position: absolute;
+    margin:0;
+    width: max-content;
+right: 0;
+    box-sizing: border-box;
+    z-index: 2;
+    border-radius: 6px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 60px;
+  }
+  
+  .dropdown ul li {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .dropdown ul li a:link, .dropdown ul li a:visited {
+    display: inline-block;
+    padding: 10px 0.8rem;
+    width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+
+  
+ 
+  .dropdown > summary::before {
+    display: none;
+  }
+  
+  .dropdown[open] > summary::before {
+      content: ' ';
+      display: block;
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+  }

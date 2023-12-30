@@ -1,36 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/css/account.css'
-import profilePic from '../assets/images/Rafael_Merlotto.jpg'
+import profilePic from '../assets/images/profile-pic.png'
 import { authService } from '../services'
 import { useNavigate } from 'react-router-dom'
 
+
 export default function UserManager({ id, email, firstName, surName, birthDate, post, comments }) {
 
-    const [user, setUser] = useState(false)
     const navigate = useNavigate()
-
 
     async function deleteAccount() {
         const user = await authService.deleteAccountUser()
-        console.log(user)
         return user
     }
-    
+
     const handleDelete = async (event) => {
         event.preventDefault()
         deleteAccount();
-     return navigate("/deletedAccount")
+        return navigate("/deletedAccount")
     }
 
-
-
-
-
+    const handleChangePassword = async (event) => {
+        event.preventDefault()
+        return navigate('/changePassword')
+    }
 
 
     return (
         <div className='container-account' key={id}>
-
             <div className='content-account'>
                 <div className='container-account-info'>
                     <img src={profilePic} height={150} />
@@ -42,14 +39,10 @@ export default function UserManager({ id, email, firstName, surName, birthDate, 
                 </div>
                 <div className='container-account-manager'>
                     <button className='btn-account'>Profile image</button>
-                    <button className='btn-account'>Change password</button>
-                    <button className='btn-account' onClick={handleDelete}>Delete account</button>
+                    <button className='btn-account' onClick={handleChangePassword}>Change password</button>
+                    <button className='btn-account' style={{ background: "rgb(169, 48, 48)" }} onClick={handleDelete}>Delete account</button>
                 </div>
-
-
             </div>
-
-
         </div>
     )
 }

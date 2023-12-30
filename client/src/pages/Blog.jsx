@@ -8,26 +8,18 @@ import Header from '../components/Header';
 
 
 export default function Blog() {
+
   const [contents, setContents] = useState([]);
-  const [posts, setPosts] = useState("")
-  const [comments, setComments] = useState([])
   const [user, setUser] = useState("")
-
-
   const auth = useAuth();
 
   useEffect(() => {
     async function getPosts() {
       const posts = await appPostService.posts()
-      setComments(posts.post[0])
-      setContents(posts.post)
-      return
-
-
+      return setContents(posts.post)
     }
     getPosts();
   }, [])
-
 
 
   async function createPosts(accessToken, title, body) {
@@ -51,7 +43,6 @@ export default function Blog() {
       <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a" }}>My Blog Post</h2>
       {contents.map((e) => (
         <>
-      
           <Contents
             key={e.id}
             id={e.id}
@@ -61,10 +52,7 @@ export default function Blog() {
             createTime={e.createTime}
             comments={e.comments}
           />
-
-
         </>
-
       ))}
     </div>
   )

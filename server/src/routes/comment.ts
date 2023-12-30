@@ -62,15 +62,35 @@ comment.get('/comments', async (req, res) => {
 // })
 
 
-// comment.delete('/delete/:id', async (req, res) => {
-//     const { authorId, accessToken } = req.body;
-//     const { id } = req.params;
-//     const commentResult: Comment | null = await deleteComment(id, authorId, accessToken);
-//     if (!commentResult) {
-//         return res.status(400).send({ msg: 'Cannot delete comment', check: false })
-//     }
-//     return res.status(200).send({ msg: 'Comment deleted correctly', comment: commentResult, check: true })
-// })
+comment.delete('/delete/:id', async (req, res) => {
+
+    const { id } = req.params;
+    const accessToken = req.headers.authorization
+    const payload: JwtPayload | null = checkJwt(accessToken!);
+    if (!payload) {
+      return res.status(401).send({ message: "Token not valid", valid: false });
+    }
+  
+    const userId: string = payload.userId
+    const user: User | null = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      }
+    })
+    if (!user) {
+      return res.status(401).send({ message: "User not valid", valid: false });
+    }
+    const commentResult: Comment | null = await prisma.comment.delete({
+        where: {
+          id: id,
+        }
+      })
+
+    if (!commentResult) {
+        return res.status(400).send({ msg: 'Cannot delete comment', check: false })
+    }
+    return res.status(200).send({ msg: 'Comment deleted correctly', comment: commentResult, check: true })
+})
 
 
 export { comment }

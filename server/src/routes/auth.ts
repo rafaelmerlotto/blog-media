@@ -1,11 +1,12 @@
 import express, { Router } from 'express'
 import { JwtKey, User } from '@prisma/client'
 import { getToken } from '../utils/key';
-import bcrypt, { compareSync } from 'bcrypt'
+import bcrypt, { compareSync, hashSync } from 'bcrypt'
 import dotenv from "dotenv"
 import { prisma } from '../utils/prisma';
 import { JwtPayload } from 'jsonwebtoken';
 import { checkJwt } from '../services/checkJwt';
+import { app } from './blog';
 
 dotenv.config();
 const auth: Router = express.Router()
@@ -144,17 +145,17 @@ auth.delete('/deleteAccount', async (req, res) => {
         return res.status(401).send({ msg: "User not valid", valid: false });
     }
     await prisma.jwtKey.deleteMany({
-        where:{
+        where: {
             userId: user.id
         }
     })
     await prisma.post.deleteMany({
-        where:{
+        where: {
             authorId: user.id
         }
     })
     await prisma.comment.deleteMany({
-        where:{
+        where: {
             authorId: user.id
         }
     })
@@ -166,7 +167,41 @@ auth.delete('/deleteAccount', async (req, res) => {
     if (!deleteUser) {
         return res.status(500).send({ msg: "Internal server error.", valid: false });
     }
-    return res.status(200).send({msg:"Account deleted correctly.",valid:true});
+    return res.status(200).send({ msg: "Account deleted correctly.", valid: true });
+})
+
+
+auth.put('/changepassword', async (req, res) => {
+
+    const { newPassword, repeatNewPassword } = req.body
+    const accessToken = req.headers.authorization
+
+    const payload: JwtPayload | null = checkJwt(accessToken!);
+    if (!payload) {
+        return res.status(401).send({ message: "Token not valid", valid: false });
+    }
+    const userId: string = payload.userId;
+    const user: User | null = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    });
+    if (!user) {
+        return res.status(401).send({ msg: "User not valid", valid: false });
+    }
+    const passwordHash: string = hashSync(newPassword, 5);
+    const changePassword: User | null = await prisma.user.update({
+        where: {
+            id: user.id
+        },
+        data: {
+            password: passwordHash
+        }
+    })
+    if (!changePassword) {
+        return res.status(500).send({ msg: "Internal server error.", valid: false });
+    }
+    return res.status(200).send({ msg: "Password changed correctly.", valid: true });
 })
 
 export { auth }

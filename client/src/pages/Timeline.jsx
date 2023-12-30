@@ -4,8 +4,6 @@ import Header from '../components/Header'
 import AllContents from '../components/AllContents';
 
 
-
-
 export default function Timeline() {
 
     const [allContents, setAllContents] = useState([]);
@@ -36,7 +34,7 @@ export default function Timeline() {
             <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a" }}>Timeline</h2>
             {allContents.map((e) => (
                 <>
-                    <AllContents post={e} comments={e.comments} />
+                    <AllContents key={e.id} post={e} comments={e.comments} />
                 </>
             ))}
 

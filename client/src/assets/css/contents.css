@@ -76,10 +76,13 @@
 }
 
 h3{
-    margin-top: 40px;
+    margin-top: 20px;
     color:hsla(191, 28%, 23%, 1) ;
 }
 
 hr{
     border: 1px solid hsla(191, 28%, 23%, 1);
+}
+.post h2{
+    width: 90%;
 }

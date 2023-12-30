@@ -42,8 +42,7 @@ export class AuthService {
             body: JSON.stringify(firstName, surName, email, password, birthDate)
         })
         if (res.ok) {
-            const data = await res.json();
-            return data
+            return await res.json();
         }
     }
 
@@ -86,8 +85,26 @@ export class AuthService {
             },
         })
         if (res.ok) {
-            console.log(res)
             return await res.json();
+        }
+        return false
+    }
+
+    async changePassword(newPassword, repeatNewPassword) {
+        const res = await fetch(`${this.url}/changepassword`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+                authorization: this.iToken
+            },
+            body: JSON.stringify(newPassword, repeatNewPassword)
+        })
+        console.log(res)
+        if (res.ok) {
+
+            const data = await res.json();
+            this.message = data.msg
+            return true
         }
         return false
     }

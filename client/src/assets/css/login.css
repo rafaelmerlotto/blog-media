@@ -51,6 +51,10 @@ color: rgb(169, 48, 48);
 
 h2{
     color: hsla(191, 28%, 23%, 1);
+    margin: 10px;
+}
+.to-register{
+    margin: 10px;
 }
 
 .link-login {

@@ -1,16 +1,29 @@
 import React from 'react'
 import '../assets/css/header.css'
 import Logout from './Logout'
-import { Link } from 'react-router-dom'
-import profilePic from '../assets/images/Rafael_Merlotto.jpg'
-
+import { Link, useNavigate } from 'react-router-dom'
+import profilePic from '../assets/images/profile-pic.png'
+import logo from '../assets/images/logo-post-blog.png'
 
 export default function Header({ firstName, children }) {
+
+  const navigate = useNavigate();
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    return navigate("/account")
+  }
 
   return (
     <div className='header'>
       <div className='welcome-user'>
-        <p>Welcome back {firstName}&nbsp;<img src={profilePic} style={{borderRadius:100}} height={30}/></p>
+        <img src={logo} alt="logo" height={70} />
+        <p>Welcome back {firstName}&nbsp;
+        <img 
+        onClick={handleClick} 
+        src={profilePic} 
+        style={{ borderRadius: 100, cursor:"pointer" }} 
+        height={30} /></p>
       </div>
       <div className='nav'>
         <Link className='link' to={"/blog"}>Home</Link>

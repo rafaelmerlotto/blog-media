@@ -71,6 +71,9 @@ app.get('/posts/user', async (req, res) => {
     },
     include: {
       comments: true
+    },
+    orderBy:{
+      createTime: 'desc'
     }
   })
 
@@ -87,6 +90,9 @@ app.get('/posts', async (req, res) => {
   const post: Post[] | null = await prisma.post.findMany({
     include: {
       comments: true
+    },
+    orderBy:{
+      createTime: 'desc'
     }
   })
 
@@ -128,22 +134,24 @@ app.delete('/delete/:id', async (req, res) => {
   if (!user) {
     return res.status(401).send({ message: "User not valid", valid: false });
   }
- 
+
 
   const post: Post | null = await prisma.post.delete({
     where: {
-      id: id
+      id: id,
+      authorId: user.id
     },
-    include:{
-      comments:true
+
+    include: {
+      comments: true
     }
   })
   await prisma.comment.deleteMany({
-    where:{
+    where: {
       postId: post.id
     }
   })
- 
+
 
   if (!post) {
     return res.status(400).send({ msg: 'Cannot delete post', valid: false })

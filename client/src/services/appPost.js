@@ -1,4 +1,4 @@
-import { appCommentService, authService } from ".";
+import { authService } from ".";
 
 
 export class AppPostService {
@@ -55,22 +55,20 @@ export class AppPostService {
         return false
     }
 
-// DELETE POST
-async deletePost(postId){
-    const res = await fetch(`${this.url}/delete/${postId}`, {
-        method: 'DELETE',
-        headers: {
-            'content-type': 'application/json',
-            authorization: authService.iToken
-        },
-    })
-    if (res.ok) {
-        const data =await res.json();
-        console.log(data)
-        return 
+    // DELETE POST
+    async deletePost(postId) {
+        const res = await fetch(`${this.url}/delete/${postId}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                authorization: authService.iToken
+            },
+        })
+        if (res.ok) {
+            return await res.json();
+        }
+        return false
     }
-    return false
-}
 
 
 }

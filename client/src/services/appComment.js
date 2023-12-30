@@ -1,8 +1,9 @@
-import { appPostService, authService } from ".";
+import { authService } from ".";
 
 
 export class AppCommentService {
     iPostId;
+    iCommentId;
 
     constructor(url) {
         this.url = url
@@ -10,6 +11,10 @@ export class AppCommentService {
 
     get postId() {
         return this.iPostId
+    }
+
+    get commentId() {
+        return this.commentId
     }
 
     async createComment(comment) {
@@ -21,11 +26,8 @@ export class AppCommentService {
             },
             body: JSON.stringify(comment)
         })
-
         if (res.ok) {
-            const data = await res.json();
-            console.log(data)
-            return data
+            return await res.json();
         }
         return false
     }
@@ -41,12 +43,23 @@ export class AppCommentService {
         })
         console.log(res)
         if (res.ok) {
-            const data = await res.json();
-            return data
+            return await res.json();
         }
         return false
     }
 
-
-
+    async deleteComment(commentId) {
+        const res = await fetch(`${this.url}/comments/${commentId}`, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                authorization: authService.iToken
+            }
+        })
+        console.log(res)
+        if (res.ok) {
+            return await res.json();
+        }
+        return false
+    }
 }
