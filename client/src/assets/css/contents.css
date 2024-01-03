@@ -25,6 +25,7 @@
 .content p{
     font-weight: bold;
     font-size: 14px;
+    width: 85%;
 }
 .content span{
     font-size: 13px;

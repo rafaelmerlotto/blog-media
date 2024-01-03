@@ -3,10 +3,12 @@
 export class AuthService {
 
     iToken;
+   
 
-    constructor(url, message) {
+    constructor(url, message, authorId) {
         this.url = url
         this.message = message
+        this.authorId = authorId
     }
 
     get token() {
@@ -57,7 +59,25 @@ export class AuthService {
         })
         if (res.ok) {
             const data = await res.json();
+            this.authorId = data.id
             return data.name
+        }
+        return false
+    }
+
+    async getUserId( authorId) {
+        const res = await fetch(`${this.url}/user`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                authorization: this.iToken
+            },
+            body: JSON.stringify( authorId)
+        })
+        if (res.ok) {
+            const data = await res.json();
+            this.authorId = data.id
+            return data.id
         }
         return false
     }

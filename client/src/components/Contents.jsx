@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../assets/css/contents.css'
 import profilePic from '../assets/images/profile-pic.png'
 import CreateComment from './CreateComment';
-import ManagerPostComment from './ManagerPostComment';
+import ManagerPost from './ManagerPost';
 
 
 export default function Contents({ id, title, body, authorName, createTime, comments, children }) {
@@ -17,7 +17,7 @@ export default function Contents({ id, title, body, authorName, createTime, comm
   return (
     <div className='container-blogPost'  >
       <div className='content' key={id} >
-        <ManagerPostComment postId={id} key={id} />
+        <ManagerPost postId={id} key={id} />
         <div className='post'>
           <h2>{title}</h2>
           <p className='body'>{body}</p>

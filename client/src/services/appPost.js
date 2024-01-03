@@ -56,15 +56,16 @@ export class AppPostService {
     }
 
     // DELETE POST
-    async deletePost(postId) {
+    async deletePost(postId, authorId) {
         const res = await fetch(`${this.url}/delete/${postId}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',
                 authorization: authService.iToken
-            },
+            }
         })
         if (res.ok) {
+            authService.authorId = authorId
             return await res.json();
         }
         return false

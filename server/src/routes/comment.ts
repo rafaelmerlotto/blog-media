@@ -31,7 +31,7 @@ comment.post('/create/:postId', async (req, res) => {
             comment: comment,
             postId: post!.id,
             authorId: user!.id,
-            authorName: user!.firstName
+            authorName: user!.firstName,
         }
     })
     if (!commentResult) {
@@ -63,26 +63,26 @@ comment.get('/comments', async (req, res) => {
 
 
 comment.delete('/delete/:id', async (req, res) => {
-
     const { id } = req.params;
     const accessToken = req.headers.authorization
     const payload: JwtPayload | null = checkJwt(accessToken!);
     if (!payload) {
-      return res.status(401).send({ message: "Token not valid", valid: false });
+      return res.status(401).send({ msg: "Token not valid", valid: false });
     }
-  
     const userId: string = payload.userId
     const user: User | null = await prisma.user.findUnique({
       where: {
         id: userId,
       }
     })
-    if (!user) {
-      return res.status(401).send({ message: "User not valid", valid: false });
+    if (!user ) {
+      return res.status(401).send({ msg: "User not valid", valid: false });
     }
+  
     const commentResult: Comment | null = await prisma.comment.delete({
         where: {
           id: id,
+          authorId: user.id
         }
       })
 

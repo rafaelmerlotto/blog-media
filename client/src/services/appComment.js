@@ -48,16 +48,17 @@ export class AppCommentService {
         return false
     }
 
-    async deleteComment(commentId) {
-        const res = await fetch(`${this.url}/comments/${commentId}`, {
-            method: 'GET',
+    async deleteComment(commentId, authorId) {
+        const res = await fetch(`${this.url}/delete/${commentId}`, {
+            method: 'DELETE',
             headers: {
                 'content-type': 'application/json',
                 authorization: authService.iToken
-            }
+            },
+           
         })
-        console.log(res)
         if (res.ok) {
+            authService.authorId = authorId
             return await res.json();
         }
         return false

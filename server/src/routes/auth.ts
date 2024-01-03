@@ -91,7 +91,7 @@ auth.post("/user", async (req, res) => {
     if (!user) {
         return res.status(401).send({ msg: "User not valid", valid: false });
     }
-    return res.status(200).send({ name: user.firstName, email: user.email, valid: true });
+    return res.status(200).send({ name: user.firstName, id: user.id, valid: true });
 })
 
 auth.get("/manager/user", async (req, res) => {

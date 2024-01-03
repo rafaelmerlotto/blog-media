@@ -39,24 +39,23 @@ model Post {
   body       String
   createTime DateTime  @default(now())
   author     User      @relation(fields: [authorId], references: [id])
-  authorId   String    @db.ObjectId 
+  authorId   String    @db.ObjectId
   authorName String    @map("firstName")
   comments   Comment[]
 
   @@unique([id, authorId])
-  
 }
 
 model Comment {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  comment    String
-  createTime DateTime @default(now())
-  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId     String   @db.ObjectId 
-  author     User     @relation(fields: [authorId], references: [id]) 
-  authorId   String   @db.ObjectId
-  authorName String   @map("firstName")
-  
-@@unique([id, postId])
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  comment     String
+  createTime  DateTime @default(now())
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId      String   @db.ObjectId
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String   @db.ObjectId
+  authorName  String   @map("firstName")
+
+  @@unique([id, postId])
   @@unique([id, authorId])
 }

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className='container-home'>
       <div className='box-logo'>
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" height={200} />
       </div>
       <div className='box-links'>
         <h1>Sign up now</h1>

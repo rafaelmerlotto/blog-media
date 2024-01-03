@@ -22,7 +22,7 @@ export default function Register() {
   return (
     <div className='container-register'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <img src={logo} alt="logo" height={100} />
+        <img src={logo} alt="logo" height={80} />
         <h2>Create your Blog account</h2>
         <p>Already have an account? <Link className='link-register' to={"/login"}>Log in</Link></p>
         <input placeholder='First name' type="text" {...register('firstName', { required: true })} />

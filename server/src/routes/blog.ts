@@ -135,7 +135,6 @@ app.delete('/delete/:id', async (req, res) => {
     return res.status(401).send({ message: "User not valid", valid: false });
   }
 
-
   const post: Post | null = await prisma.post.delete({
     where: {
       id: id,

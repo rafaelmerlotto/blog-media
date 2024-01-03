@@ -17,7 +17,7 @@ export default function Header({ firstName, children }) {
   return (
     <div className='header'>
       <div className='welcome-user'>
-        <img src={logo} alt="logo" height={70} />
+        <img src={logo} alt="logo" height={60} />
         <p>Welcome back {firstName}&nbsp;
         <img 
         onClick={handleClick} 

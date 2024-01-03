@@ -29,14 +29,14 @@ export default function Login() {
     return (
         <div className='container-login'>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <img src={logo} alt="logo" height={100} />
+                <img src={logo} alt="logo" height={80} />
                 <h2>Welcome back.</h2>
                 <p className='to-register'>New to Blog? <Link className='link-login' to={"/register"}>Sign up</Link></p>
                 <input placeholder='Email' type="email" {...register('email')} />
                 <input placeholder='Password' type="password" {...register('password', { required: true, minLength: 5 })} />
                 <p className='alert'>{alert}</p>
                 <button className='btn-login' type='submit'>Log in</button>
-                <Link className='forget-password' to={"/register"}>Forget password?</Link>
+                <Link className='forget-password' to={"/forgetPassword"}>Forget password?</Link>
             </form>
         </div>
     )

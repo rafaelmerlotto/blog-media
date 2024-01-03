@@ -8,6 +8,7 @@ import Account from "./pages/Account";
 import DeletedAcount from "./components/DeletedAccount";
 import Home from "./pages/Home";
 import ChangePassword from "./components/ChangePassword";
+import ForgetPassword from "./components/ForgetPassword";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/account"  element={  <PrivateRoute>  <Account/> </PrivateRoute> } />
           <Route path="/changePassword"  element={  <PrivateRoute>  <ChangePassword/></PrivateRoute> } />
           <Route path="/deletedAccount"  element={ <DeletedAcount/> } />
+          <Route path="/forgetPassword"  element={ <ForgetPassword/> } />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

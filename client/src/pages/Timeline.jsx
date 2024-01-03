@@ -7,7 +7,7 @@ import AllContents from '../components/AllContents';
 export default function Timeline() {
 
     const [allContents, setAllContents] = useState([]);
-    const [user, setUser] = useState("")
+    const [user, setUser] = useState("");
 
     useEffect(() => {
         async function allPosts() {
@@ -19,13 +19,11 @@ export default function Timeline() {
     }, [])
 
 
-
     async function dataUser(firstName) {
         const user = await authService.user(firstName)
         setUser(user)
     }
     dataUser()
-
 
 
     return (
