@@ -1,6 +1,6 @@
 
 
-export class AuthService {
+export class AuthService  {
 
     iToken;
    
@@ -89,6 +89,22 @@ export class AuthService {
                 'content-type': 'application/json',
                 authorization: this.iToken
             },
+        })
+        if (res.ok) {
+            return await res.json();
+        }
+        return false
+    }
+
+    async editAccount(firstName, surName) {
+        const res = await fetch(`${this.url}/editAccount`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+                authorization: this.iToken
+            },
+            body: JSON.stringify(firstName, surName)
+
         })
         if (res.ok) {
             return await res.json();

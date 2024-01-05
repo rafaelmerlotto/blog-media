@@ -2,11 +2,13 @@ import { authService } from ".";
 
 
 export class AppCommentService {
+
     iPostId;
     iCommentId;
 
     constructor(url) {
         this.url = url
+        
     }
 
     get postId() {
@@ -41,7 +43,21 @@ export class AppCommentService {
                 authorization: authService.iToken
             }
         })
-        console.log(res)
+        if (res.ok) {
+            return await res.json();
+        }
+        return false
+    }
+
+    async updateComment(commentId, comment) {
+        const res = await fetch(`${this.url}/update/${commentId}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json',
+                authorization: authService.iToken
+            },
+            body: JSON.stringify(comment)
+        })
         if (res.ok) {
             return await res.json();
         }
@@ -55,7 +71,7 @@ export class AppCommentService {
                 'content-type': 'application/json',
                 authorization: authService.iToken
             },
-           
+
         })
         if (res.ok) {
             authService.authorId = authorId

@@ -1,4 +1,4 @@
-import express, { Router } from 'express'
+import express, { Request, Response, Router } from 'express'
 import { JwtKey, User } from '@prisma/client'
 import { getToken } from '../utils/key';
 import bcrypt, { compareSync, hashSync } from 'bcrypt'
@@ -6,7 +6,7 @@ import dotenv from "dotenv"
 import { prisma } from '../utils/prisma';
 import { JwtPayload } from 'jsonwebtoken';
 import { checkJwt } from '../services/checkJwt';
-import { app } from './blog';
+import { body, validationResult } from 'express-validator';
 
 dotenv.config();
 const auth: Router = express.Router()
@@ -58,18 +58,25 @@ auth.post('/register', async (req, res) => {
 })
 
 
-auth.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    const user: User | false = await verifyUser(email, password)
-    if (!user) {
-        return res.status(400).send({ msg: 'Authentication not valid', valid: false })
-    }
-    if (!compareSync(password, user.password)) {
-        return null
-    }
-    const token: string = await generateJwt(user)
-    return res.status(200).send({ msg: `Hello `, accessToken: token, valid: true })
-})
+auth.post('/login',
+    body('email').isEmail(),
+    body('password').isString().isLength({ min: 5 }),
+    async (req: Request, res: Response) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
+        const { email, password } = req.body;
+        const user: User | false = await verifyUser(email, password)
+        if (!user) {
+            return res.status(400).send({ msg: 'Authentication not valid', valid: false })
+        }
+        if (!compareSync(password, user.password)) {
+            return null
+        }
+        const token: string = await generateJwt(user)
+        return res.status(200).send({ msg: `Hello `, accessToken: token, valid: true })
+    })
 
 
 auth.post("/user", async (req, res) => {
@@ -128,12 +135,47 @@ auth.get("/manager/user", async (req, res) => {
     return res.status(200).send({ user: getUser, valid: true });
 })
 
+auth.put("/editAccount", async (req, res) => {
+    const { firstName, surName } = req.body;
+    const accessToken = req.headers.authorization
+    const payload: JwtPayload | null = checkJwt(accessToken!);
+    if (!payload) {
+        return res.status(401).send({ msg: "Token not valid", valid: false });
+    }
+    const userId: string = payload.userId;
+    const user: User | null = await prisma.user.findUnique({
+        where: {
+            id: userId
+        },
+        include: {
+            post: true,
+            comments: true
+        }
+    });
+    if (!user) {
+        return res.status(401).send({ msg: "User not valid", valid: false });
+    }
+    const editUser: User | null = await prisma.user.update({
+        where: {
+            id: user.id
+        },
+        data: {
+            firstName: firstName,
+            surName: surName
+        }
+    })
+    if (!editUser) {
+        return res.status(401).send({ msg: "User not valid", valid: false });
+    }
+    return res.status(200).send({ user: editUser, valid: true });
+})
+
 
 auth.delete('/deleteAccount', async (req, res) => {
     const accessToken = req.headers.authorization
     const payload: JwtPayload | null = checkJwt(accessToken!);
     if (!payload) {
-        return res.status(401).send({ message: "Token not valid", valid: false });
+        return res.status(401).send({ msg: "Token not valid", valid: false });
     }
     const userId: string = payload.userId;
     const user: User | null = await prisma.user.findUnique({
@@ -178,7 +220,7 @@ auth.put('/changepassword', async (req, res) => {
 
     const payload: JwtPayload | null = checkJwt(accessToken!);
     if (!payload) {
-        return res.status(401).send({ message: "Token not valid", valid: false });
+        return res.status(401).send({ msg: "Token not valid", valid: false });
     }
     const userId: string = payload.userId;
     const user: User | null = await prisma.user.findUnique({

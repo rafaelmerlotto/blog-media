@@ -9,6 +9,8 @@ import DeletedAcount from "./components/DeletedAccount";
 import Home from "./pages/Home";
 import ChangePassword from "./components/ChangePassword";
 import ForgetPassword from "./components/ForgetPassword";
+import UpdatePost from "./components/UpdatePost";
+
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
           <Route path="/changePassword"  element={  <PrivateRoute>  <ChangePassword/></PrivateRoute> } />
           <Route path="/deletedAccount"  element={ <DeletedAcount/> } />
           <Route path="/forgetPassword"  element={ <ForgetPassword/> } />
+          <Route path="/updatePost"  element={ <PrivateRoute> <UpdatePost/></PrivateRoute>  } />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

@@ -17,7 +17,7 @@ export default function Header({ firstName, children }) {
   return (
     <div className='header'>
       <div className='welcome-user'>
-        <img src={logo} alt="logo" height={60} />
+       <Link to={"/blog"}><img src={logo} alt="logo" height={60} /> </Link> 
         <p>Welcome back {firstName}&nbsp;
         <img 
         onClick={handleClick} 

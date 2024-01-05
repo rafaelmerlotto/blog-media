@@ -48,6 +48,7 @@ export default function Blog() {
             id={e.id}
             title={e.title}
             body={e.body}
+            authorId={e.authorId}
             authorName={e.authorName}
             createTime={e.createTime}
             comments={e.comments}

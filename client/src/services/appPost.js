@@ -1,13 +1,14 @@
 import { authService } from ".";
 
 
-export class AppPostService {
 
+export class AppPostService{
+   
 
     constructor(url) {
         this.url = url;
     }
-
+   
 
     // GET USER POSTS
     async posts() {
@@ -43,6 +44,23 @@ export class AppPostService {
     async createPost(title, body) {
         const res = await fetch(`${this.url}/create`, {
             method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                authorization: authService.iToken
+            },
+            body: JSON.stringify(title, body)
+        })
+        if (res.ok) {
+            return await res.json();
+        }
+        return false
+    }
+
+
+    // UPDATE POST
+    async updatePost(postId, title, body) {
+        const res = await fetch(`${this.url}/update/${postId}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json',
                 authorization: authService.iToken

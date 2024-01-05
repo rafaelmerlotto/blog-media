@@ -13,7 +13,7 @@ app.post("/create", async (req, res) => {
   const accessToken = req.headers.authorization
   const payload: JwtPayload | null = checkJwt(accessToken!);
   if (!payload) {
-    return res.status(401).send({ message: "Token not valid", valid: false });
+    return res.status(401).send({ msg: "Token not valid", valid: false });
   }
 
   const userId: string = payload.userId
@@ -23,7 +23,7 @@ app.post("/create", async (req, res) => {
     }
   })
   if (!user) {
-    return res.status(401).send({ message: "User not valid", valid: false });
+    return res.status(401).send({ msg: "User not valid", valid: false });
   }
   const post: Post | null = await prisma.post.create({
     data: {
@@ -46,7 +46,7 @@ app.get('/posts/user', async (req, res) => {
   const accessToken = req.headers.authorization
   const payload: string | JwtPayload | null = checkJwt(accessToken!);
   if (!payload) {
-    return res.status(401).send({ message: "Token not valid", valid: false });
+    return res.status(401).send({ msg: "Token not valid", valid: false });
   }
   const userId: string = payload!.userId
 
@@ -61,7 +61,7 @@ app.get('/posts/user', async (req, res) => {
     }
   })
   if (!user) {
-    return res.status(401).send({ message: "User not valid", valid: false });
+    return res.status(401).send({ msg: "User not valid", valid: false });
   }
 
   const posts: Post[] | Post | null = await prisma.post.findMany({
@@ -97,24 +97,47 @@ app.get('/posts', async (req, res) => {
   })
 
   if (!post) {
-    return res.status(404).send({ msg: 'List of post not found', check: false })
+    return res.status(404).send({ msg: 'List of post not found', valid: false })
   }
-  return res.status(200).send({ msg: 'List of post found', post: post, check: true })
+  return res.status(200).send({ msg: 'List of post found', post: post, valid: true })
 })
 
 
 
 
+app.put("/update/:id", async (req, res) => {
+  const { title, body } = req.body;
+  const { id } = req.params;
+  const accessToken = req.headers.authorization
+  const payload: JwtPayload | null = checkJwt(accessToken!);
+  if (!payload) {
+    return res.status(401).send({ message: "Token not valid", valid: false });
+  }
 
-// app.put("/update/:id", async (req, res) => {
-//   const { authorId,accessToken, title, body } = req.body;
-//   const { id } = req.params;
-//   const post: Post | null = await updatePost(id,authorId, accessToken, title, body);
-//   if (!post) {
-//     return res.status(400).send({ msg: 'Cannot change post', check: false })
-//   }
-//   return res.status(200).send({ msg: 'Post Changed correctly', post: post, check: true })
-// })
+  const userId: string = payload.userId
+  const user: User | null = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    }
+  })
+  if (!user) {
+    return res.status(401).send({ message: "User not valid", valid: false });
+  }
+  const post: Post | null = await prisma.post.update({
+    where:{
+      id: id
+    },
+    data:{
+      title: title,
+      body: body,
+      createTime: new Date()
+    }
+  })
+  if (!post) {
+    return res.status(400).send({ msg: 'Cannot change post', valid: false })
+  }
+  return res.status(200).send({ msg: 'Post Changed correctly', post: post, valid: true })
+})
 
 
 app.delete('/delete/:id', async (req, res) => {
