@@ -272,6 +272,8 @@ auth.put('/changepassword',
         return res.status(200).send({ msg: "Password changed correctly.", valid: true });
     })
 
+
+
 export { auth }
 
 

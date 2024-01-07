@@ -26,7 +26,7 @@ export default function AllContents({ post, comments, children }) {
           <p className='body'>{body}</p>
         </div>
         <div className='info'>
-          <span>Author:&nbsp; <img src={profilePic} style={{ borderRadius: 100 }} height={20} /> &nbsp; {authorName} -
+          <span>Author:&nbsp; <h3 className='imageProfile-contents'>{authorName[0]}</h3> &nbsp; {authorName} -
             published: {new Date(createTime).toLocaleDateString("it-IT")}, {new Date(createTime).toLocaleTimeString("it-IT", {
               hour12: false,
               timeZone: 'UTC',
@@ -42,7 +42,7 @@ export default function AllContents({ post, comments, children }) {
             <hr />
             <ManagerComment commentId={e.id} comment={e.comment} authorId={e.authorId} />
             <p>{e.comment}</p>
-            <span> Author:&nbsp; <img src={profilePic} style={{ borderRadius: 100 }} height={20} /> &nbsp;{e.authorName} -
+            <span> Author:&nbsp;<h3 className='imageProfile-contents'>{e.authorName[0]}</h3> &nbsp;{e.authorName} -
               published: {new Date(e.createTime).toLocaleDateString("it-IT")},  {new Date(e.createTime).toLocaleTimeString("it-IT", {
                 hour12: false,
                 timeZone: 'UTC',

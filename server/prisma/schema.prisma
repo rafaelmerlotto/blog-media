@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  email     String    @unique
-  password  String
-  firstName String
-  surName   String
-  birthDate String
-  post      Post[]
-  comments  Comment[]
-  jwt       JwtKey[]
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  email        String    @unique
+  password     String
+  firstName    String
+  surName      String
+  birthDate    String
+  post         Post[]
+  comments     Comment[]
+  jwt          JwtKey[]
 }
 
 model JwtKey {
@@ -47,14 +47,14 @@ model Post {
 }
 
 model Comment {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  comment     String
-  createTime  DateTime @default(now())
-  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId      String   @db.ObjectId
-  author      User     @relation(fields: [authorId], references: [id])
-  authorId    String   @db.ObjectId
-  authorName  String   @map("firstName")
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  comment    String
+  createTime DateTime @default(now())
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId     String   @db.ObjectId
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String   @db.ObjectId
+  authorName String   @map("firstName")
 
   @@unique([id, postId])
   @@unique([id, authorId])

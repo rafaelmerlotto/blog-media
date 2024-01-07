@@ -18,13 +18,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-         <Route path="/blog"  element={  <PrivateRoute>  <Blog/></PrivateRoute> } />
-          <Route path="/timeline"  element={  <PrivateRoute> <Timeline/></PrivateRoute>  } />
-          <Route path="/account"  element={  <PrivateRoute>  <Account/> </PrivateRoute> } />
-          <Route path="/changePassword"  element={  <PrivateRoute>  <ChangePassword/></PrivateRoute> } />
-          <Route path="/deletedAccount"  element={ <DeletedAcount/> } />
-          <Route path="/forgetPassword"  element={ <ForgetPassword/> } />
-          <Route path="/updatePost"  element={ <PrivateRoute> <UpdatePost/></PrivateRoute>  } />
+          <Route path="/blog" element={<PrivateRoute>  <Blog /></PrivateRoute>} />
+          <Route path="/timeline" element={<PrivateRoute> <Timeline /></PrivateRoute>} />
+          <Route path="/account" element={<PrivateRoute>  <Account /> </PrivateRoute>} />
+          <Route path="/changePassword" element={<PrivateRoute>  <ChangePassword /></PrivateRoute>} />
+          <Route path="/deletedAccount" element={<PrivateRoute><DeletedAcount /> </PrivateRoute>} />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

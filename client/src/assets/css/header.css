@@ -6,9 +6,13 @@
   flex-direction: row;
   align-items: center;
    justify-content: space-around;
+   position: fixed;
+   top: 0;
+   z-index: 2;
 }
 .welcome-user{
   display: flex;
+  align-items: center;
 gap: 20px;
 }
 .welcome-user p{
@@ -25,4 +29,16 @@ gap: 20px;
 }
 .nav .link{
  font-size: 19px;  
+}
+
+.imageProfile{
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border: 2px solid #d7dde8;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  color: #d7dde8;
+  background:  hsla(191, 28%, 23%, 1);
 }

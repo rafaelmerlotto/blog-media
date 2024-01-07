@@ -34,6 +34,7 @@ export default function Account() {
                     firstName={e.firstName}
                     surName={e.surName}
                     birthDate={new Date(e.birthDate).toLocaleDateString("it-IT")}
+                    profileImage={e.profileImage}
                     post={e.post.length}
                     comments={e.comments.length}
                 />

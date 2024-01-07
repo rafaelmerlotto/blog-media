@@ -44,7 +44,7 @@ export default function UserManager({ id, email, firstName, surName, birthDate, 
          <div className='container-account' key={id}>
             <div className='content-account'>
                 <div className='container-account-info'>
-                    <img src={profilePic} height={150} />
+                    <h1 className='imageProfile-manager'> {firstName[0]} </h1>
                     <p>Email: {email}</p>
                     <p>Full name: {firstName} {surName}</p>
                     <p>Birth of date: {birthDate}</p>
@@ -53,7 +53,6 @@ export default function UserManager({ id, email, firstName, surName, birthDate, 
                 </div>
                 <div className='container-account-manager'>
                     <button className='btn-account' onClick={toggleModal}>Edit account</button>
-                    <button className='btn-account'>Profile image</button>
                     <button className='btn-account' onClick={handleChangePassword}>Change password</button>
                     <button className='btn-account' style={{ background: "rgb(169, 48, 48)" }} onClick={handleDelete}>Delete account</button>
                 </div>

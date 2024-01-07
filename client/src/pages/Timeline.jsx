@@ -29,7 +29,7 @@ export default function Timeline() {
     return (
         <div>
             <Header firstName={user} />
-            <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a" }}>Timeline</h2>
+            <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a", marginTop:130 }}>Timeline</h2>
             {allContents.map((e) => (
                 <>
                     <AllContents key={e.id} post={e} comments={e.comments} />

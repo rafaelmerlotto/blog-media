@@ -9,7 +9,7 @@ import { validationMiddleware } from '../middlewares/validation';
 const comment: Router = express.Router()
 
 comment.post('/create/:postId',
-    body("body").isString(),
+    body("comment").isString(),
     param("postId").isMongoId(),
     header("accessToken").isBase64(),
     async (req: Request, res: Response) => {
@@ -58,7 +58,7 @@ comment.get('/comments', async (req: Request, res: Response) => {
 
 
 comment.put('/update/:id',
-    body("body").isString(),
+    body("comment").isString(),
     param("id").isMongoId(),
     header("accessToken").isBase64(),
     async (req: Request, res: Response) => {

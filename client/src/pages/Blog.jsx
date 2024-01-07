@@ -52,7 +52,8 @@ export default function Blog() {
             authorName={e.authorName}
             createTime={e.createTime}
             comments={e.comments}
-          />
+            firstName={user}         
+             />
         </>
       ))}
     </div>

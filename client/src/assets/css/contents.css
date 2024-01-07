@@ -1,17 +1,18 @@
-
-.container-blogPost{
+.container-blogPost {
     width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
-}
-.container-blogPost .myPostBlog-title{
-    color: #757f9a !important;
+    margin-top: 40px;
 }
 
-.content{
+.container-blogPost .myPostBlog-title {
+    color: #757f9a !important;
+
+}
+
+.content {
     width: 60%;
     height: auto;
     margin: 10px;
@@ -19,50 +20,35 @@
     background: linear-gradient(to right, #757f9a, #d7dde8);
     border-radius: 5px;
 }
-.post .body{
+
+.post .body {
     font-size: 16px;
 }
-.content p{
+
+.content p {
     font-weight: bold;
     font-size: 14px;
     width: 85%;
 }
-.content span{
+
+.content span {
     font-size: 13px;
 }
 
-.manager-post{
+.manager-post {
     display: flex;
     width: 100%;
     justify-content: flex-end;
     gap: 10px;
 }
-.info span{
+
+.info span {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.manager-post button{
-    width:max-content;
-    height: 26px;
-    border-radius: 5px;
-    border: none;
-    color: #d7dde8;
-    font-size: 12px;
-    cursor: pointer;
-    background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
-}
-.btn-managerPost:hover{
-    background: rgb(141, 60, 60);
-}
 
-.manager-comment{
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    gap: 10px;
-}
-.manager-comment button{
+.manager-post button {
     width: max-content;
     height: 26px;
     border-radius: 5px;
@@ -72,18 +58,56 @@
     cursor: pointer;
     background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
 }
-.btn-managerComment:hover{
+
+.btn-managerPost:hover {
     background: rgb(141, 60, 60);
 }
 
-h3{
-    margin-top: 20px;
-    color:hsla(191, 28%, 23%, 1) ;
+.manager-comment {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
-hr{
+.manager-comment button {
+    width: max-content;
+    height: 26px;
+    border-radius: 5px;
+    border: none;
+    color: #d7dde8;
+    font-size: 12px;
+    cursor: pointer;
+    background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
+}
+
+.btn-managerComment:hover {
+    background: rgb(141, 60, 60);
+}
+
+h3 {
+    margin-top: 20px;
+    color: hsla(191, 28%, 23%, 1);
+}
+
+hr {
     border: 1px solid hsla(191, 28%, 23%, 1);
 }
-.post h2{
+
+.post h2 {
     width: 90%;
 }
+
+.imageProfile-contents {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid #d7dde8;
+    font-size: 13px;
+    border-radius: 100%;
+    display: flex;
+   justify-content: center;
+    color: #d7dde8;
+    background: hsla(191, 28%, 23%, 1);
+}
+

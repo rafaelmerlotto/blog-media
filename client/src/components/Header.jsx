@@ -14,16 +14,20 @@ export default function Header({ firstName, children }) {
     return navigate("/account")
   }
 
+
+
   return (
     <div className='header'>
       <div className='welcome-user'>
-       <Link to={"/blog"}><img src={logo} alt="logo" height={60} /> </Link> 
+        <Link to={"/blog"}><img src={logo} alt="logo" height={60} /> </Link>
         <p>Welcome back {firstName}&nbsp;
-        <img 
-        onClick={handleClick} 
-        src={profilePic} 
-        style={{ borderRadius: 100, cursor:"pointer" }} 
-        height={30} /></p>
+          {/* <img
+            onClick={handleClick}
+            src={profilePic}
+            style={{ borderRadius: 100, cursor: "pointer" }}
+            height={30} /> */}
+          <h3 className='imageProfile'>{firstName[0]}</h3>
+        </p>
       </div>
       <div className='nav'>
         <Link className='link' to={"/blog"}>Home</Link>
