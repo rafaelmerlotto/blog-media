@@ -12,7 +12,6 @@ export default function CreateComment({ postId, children }) {
 
   const handleClick = () => {
     appCommentService.iPostId = postId
-    console.log(postId)
   }
 
 

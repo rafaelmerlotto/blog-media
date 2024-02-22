@@ -111,3 +111,22 @@ hr {
     background: hsla(191, 28%, 23%, 1);
 }
 
+
+@media screen and (max-width: 768px){
+    .container-blogPost .myPostBlog-title{
+        font-size: 16px;
+    }
+    .content{
+        width: 80%;
+    }
+    .post .body {
+        font-size: 14px;
+        width: 100%;
+    }
+    .post h2 {
+        font-size: 15px;
+    }
+    .content span {
+        font-size: 11px;
+    }
+}

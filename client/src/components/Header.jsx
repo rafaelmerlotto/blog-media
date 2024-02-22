@@ -9,17 +9,14 @@ export default function Header({ firstName, children }) {
 
   const navigate = useNavigate();
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    return navigate("/account")
-  }
 
 
 
   return (
     <div className='header'>
+     
       <div className='welcome-user'>
-        <Link to={"/blog"}><img src={logo} alt="logo" height={60} /> </Link>
+        <Link to={"/blog"}><img src={logo} alt="logo" height={40} /> </Link>
         <p>Welcome back {firstName}&nbsp;
           {/* <img
             onClick={handleClick}
@@ -27,8 +24,15 @@ export default function Header({ firstName, children }) {
             style={{ borderRadius: 100, cursor: "pointer" }}
             height={30} /> */}
           <h3 className='imageProfile'>{firstName[0]}</h3>
-        </p>
+            <div className='navigation'>
+        <span>▼</span>
+        
       </div>
+        </p>
+
+       
+      </div>
+      
       <div className='nav'>
         <Link className='link' to={"/blog"}>Home</Link>
         <Link className='link' to={"/timeline"}>Timeline</Link>

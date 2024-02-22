@@ -40,20 +40,57 @@ form input {
     cursor: pointer;
     background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
 }
-.btn-register:hover{
+
+.btn-register:hover {
     background: hsla(207, 41%, 27%, 1);
 }
+
 .link {
     text-decoration: none;
     color: hsla(191, 28%, 23%, 1);
 }
+
 .link-register {
     font-weight: 500;
-     color: hsla(191, 28%, 23%, 1);
- }
+    color: hsla(191, 28%, 23%, 1);
+}
 
- .info-password{
+.info-password {
     font-size: 13px;
     margin: 0 0 15px 0;
     width: 70%;
- }
+}
+
+@media screen and (max-width: 768px) {
+    .container-register {
+        height: auto;
+        padding-top: 20px;
+    }
+
+    .container-register form {
+        width: 90%;
+        height: auto;
+    }
+    form input{
+        font-size: 13px!important;
+        margin: 10px;
+    }
+    .container-register img{
+        height: 40px;
+        margin-top: 10px;
+    }
+    h2{
+        font-size: 18px;
+    }
+    .container-register p{
+        font-size: 14px;
+    }
+    .btn-register{
+        width: 40%;
+        height: 30px;
+        font-size: 16px;
+    }
+    .info-password{
+        font-size: 10px!important;
+    }
+}

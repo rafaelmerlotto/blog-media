@@ -42,3 +42,56 @@ gap: 20px;
   color: #d7dde8;
   background:  hsla(191, 28%, 23%, 1);
 }
+
+/* .navigation{
+  visibility: hidden;
+} */
+
+@media screen and (max-width: 768px){
+  .header{
+    width: 100%;
+  }
+  .header img{
+    height: 30px;
+  }
+  .nav{
+    visibility: hidden;
+    display: none;
+  }
+  .welcome-user{
+    gap:35px;
+  }
+  .welcome-user p{
+    width: 100%;
+    font-size: 12px;
+  }
+  .imageProfile{
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+  }
+  .navigation{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+   
+  }
+  .navigation span{
+    width: 20px;
+    font-size: 20px;
+    height: 0;
+    margin: 2px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:  hsla(191, 28%, 23%, 1)
+  }
+
+}
+
+@media screen and (min-width: 768px){
+.navigation{
+  visibility: hidden;
+}
+}

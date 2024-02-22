@@ -33,3 +33,19 @@
     cursor: pointer;
     background: hsla(191, 28%, 23%, 1) ;
 }
+
+@media screen and (max-width: 768px){
+    .create-comment textarea{
+        width: 90%;
+        height: 45px;
+        font-size: 14px;
+    }
+    .create-comment textarea::placeholder{
+        font-size: 14px;
+    }
+    .btn-createComment{
+        width: 36%;
+        height: 27px;
+        font-size: 12px;
+    }
+}

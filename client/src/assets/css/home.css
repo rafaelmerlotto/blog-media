@@ -63,3 +63,32 @@
     font-size: 27px;
     color: black;
 }
+
+
+@media screen and (max-width: 768px) {
+    .container-home{
+        flex-direction: column;
+        height: auto;
+        padding-top: 100px;
+    }
+    .box-links{
+        width: 100%;
+    }
+    .box-links h1{
+        font-size: 20px;
+    }
+    img{
+        height: 70px;
+    }
+    .box-links .home-link-register{
+        width: 40%;
+        height: 30px;
+        font-size: 15px;
+    }
+    .box-links h3{
+        font-size: 16px;
+    }
+    .box-links .home-link-login{
+        font-size: 16px;
+    }
+}

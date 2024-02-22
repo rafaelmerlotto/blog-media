@@ -11,6 +11,7 @@ export default function Blog() {
 
   const [contents, setContents] = useState([]);
   const [user, setUser] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   const auth = useAuth();
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export default function Blog() {
       return setContents(posts.post)
     }
     getPosts();
-  }, [])
+  }, [contents])
 
 
   async function createPosts(accessToken, title, body) {
@@ -42,18 +43,18 @@ export default function Blog() {
       <CreatePost firstName={user} onCreate={(title, body) => createPosts(auth.token, title, body)} />
       <h2 className='timeline-title' style={{ textAlign: "center", color: "#757f9a" }}>My Blog Post</h2>
       {contents.map((e) => (
-        <>
-          <Contents
-            key={e.id}
-            id={e.id}
-            title={e.title}
-            body={e.body}
-            authorId={e.authorId}
-            authorName={e.authorName}
-            createTime={e.createTime}
-            comments={e.comments}
-            firstName={user}         
-             />
+        <>   
+            <Contents
+              key={e.id}
+              id={e.id}
+              title={e.title}
+              body={e.body}
+              authorId={e.authorId}
+              authorName={e.authorName}
+              createTime={e.createTime}
+              comments={e.comments}
+              firstName={user}
+            />
         </>
       ))}
     </div>

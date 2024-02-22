@@ -13,7 +13,7 @@ import UpdatePost from "./components/UpdatePost";
 
 
 
-function App() {
+export default function App() {
   return (
     <>
       <BrowserRouter>
@@ -35,7 +35,6 @@ function App() {
   );
 }
 
-export default App;
 
 
 const PrivateRoute = ({ children }) => {

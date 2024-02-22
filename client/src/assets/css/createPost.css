@@ -18,7 +18,6 @@
     border-radius: 5px;
    color: #757f9a;
    font-size: 20px;
-
 }
 .createPost textarea{
     width: 60%;  
@@ -28,13 +27,10 @@
     color: #757f9a;
     font-size: 20px;
     margin-top: 20px;
-   
 
 }
 
-
 .btn-createPost {
-
     width: 20%;
     height: 35px;
     margin: 25px;
@@ -49,6 +45,32 @@
  .createPost ::placeholder{
     font-size: 19px;
     text-align: start;
-    color: #757f9a;
-   
+    color: #757f9a; 
+}
+
+.createPost p{
+    height: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .createPost h3{
+        font-size: 13px;
+    }
+    .createPost input{
+        width: 80%;
+        height: 33px;
+        font-size: 14px;
+    }
+    .createPost textarea{
+        width: 80%;
+        font-size: 14px;
+    }
+    .createPost ::placeholder{
+        font-size: 14px;
+    }
+    .btn-createPost {
+        width: 40%;
+        height: 30px;
+        font-size: 14px;
+    }
 }
