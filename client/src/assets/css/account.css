@@ -1,4 +1,4 @@
-.container-account{
+.container-account {
     width: 100%;
     height: 100%;
     display: flex;
@@ -6,7 +6,8 @@
     align-items: center;
     margin-top: 130px;
 }
-.content-account{
+
+.content-account {
     width: 60%;
     height: auto;
     display: flex;
@@ -16,27 +17,30 @@
     background: linear-gradient(to right, #757f9a, #d7dde8);
     border-radius: 5px;
 }
-.container-account .container-account-info{
+
+.container-account .container-account-info {
     width: 50%;
 }
 
-.container-account .container-account-manager{
+.container-account .container-account-manager {
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.container-account p{
+
+.container-account p {
     font-weight: bold;
     font-size: 14px;
 }
 
-.container-account img{
+.container-account img {
     border-radius: 100%;
 }
-.container-account-manager .btn-account{
-    width:40%;
+
+.container-account-manager .btn-account {
+    width: 40%;
     height: 26px;
     margin: 20px;
     border-radius: 5px;
@@ -47,16 +51,46 @@
     background: linear-gradient(90deg, hsla(191, 28%, 23%, 1) 50%, hsla(207, 41%, 27%, 1) 100%);
 }
 
-.imageProfile-manager{
-    width:150px;
+.imageProfile-manager {
+    width: 150px;
     height: 150px;
-    margin: 0 ;
+    margin: 0;
     border: 2px solid #d7dde8;
     font-size: 120px;
     border-radius: 100%;
-   display: flex;
-   align-items: center;
-   justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #d7dde8;
     background: hsla(191, 28%, 23%, 1);
+}
+
+@media screen and (max-width: 768px) {
+
+    .content-account {
+        flex-direction: column;
+    }
+
+    .container-account p {
+        font-weight: bold;
+        font-size: 11px;
+    }
+
+    .container-account .container-account-info {
+        width: 100%;
+    }
+
+    .imageProfile-manager {
+        width: 70px;
+        height: 70px;
+        font-size: 50px;
+    }
+
+    .container-account .container-account-manager {
+        width: 100%;
+    }
+
+    .container-account-manager .btn-account {
+        width: 60%;
+    }
 }
